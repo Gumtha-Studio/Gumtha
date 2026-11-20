@@ -1,0 +1,2484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gumtha Universe — Digital Illustration Portfolio</title>
+    <style>
+        /* Self-Contained Minimalist Dark Mode Stylesheet — Zero External Dependencies */
+        :root {
+            --bg-obsidian: #0d0d0f;
+            --bg-surface: #151519;
+            --bg-surface-hover: #1d1d24;
+            --border-subtle: #23232a;
+            --border-bright: rgba(255, 255, 255, 0.22);
+            --ink-primary: #f4f4f6;
+            --ink-muted: #93939f;
+            --accent-glow: #818cf8;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 18px;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --font-display: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            background-color: var(--bg-obsidian);
+            color: var(--ink-primary);
+            font-family: var(--font-sans);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: var(--bg-obsidian);
+            color: var(--ink-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button, input, select, textarea {
+            font-family: inherit;
+            color: inherit;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        @media (min-width: 640px) {
+            .container {
+                padding: 0 32px;
+            }
+        }
+
+        /* Sticky Minimal Navigation Bar */
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            background-color: rgba(13, 13, 15, 0.88);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 70px;
+            gap: 16px;
+        }
+
+        .brand-logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 1.125rem;
+            letter-spacing: -0.02em;
+            color: var(--ink-primary);
+        }
+
+        .brand-mark {
+            width: 30px;
+            height: 30px;
+            border-radius: 9px;
+            background: linear-gradient(135deg, #272730, #16161b);
+            border: 1px solid var(--border-bright);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        @media (min-width: 640px) {
+            .nav-actions {
+                gap: 20px;
+            }
+        }
+
+        .nav-link {
+            font-size: 0.875rem;
+            color: var(--ink-muted);
+            padding: 8px 10px;
+            border-radius: var(--radius-sm);
+            transition: color 0.2s ease, background-color 0.2s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--ink-primary);
+            background-color: rgba(255, 255, 255, 0.04);
+        }
+
+        .hide-mobile {
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .hide-mobile {
+                display: inline-block;
+            }
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 15px;
+            border-radius: var(--radius-md);
+            background-color: var(--ink-primary);
+            color: var(--bg-obsidian);
+            font-size: 0.8125rem;
+            font-weight: 600;
+            transition: transform 0.15s ease, opacity 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.92;
+        }
+
+        .btn-primary:active {
+            transform: scale(0.97);
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            border-radius: var(--radius-md);
+            background-color: var(--bg-obsidian);
+            color: var(--ink-primary);
+            border: 1px solid var(--border-subtle);
+            font-size: 0.8125rem;
+            font-weight: 500;
+            transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.15s ease;
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--bg-surface-hover);
+            border-color: var(--border-bright);
+        }
+
+        .btn-secondary:active {
+            transform: scale(0.97);
+        }
+
+        /* Main Page Sections */
+        main {
+            padding-top: 48px;
+            padding-bottom: 72px;
+        }
+
+        .section-header {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        @media (min-width: 768px) {
+            .section-header {
+                flex-direction: row;
+                align-items: flex-end;
+                justify-content: space-between;
+            }
+        }
+
+        .eyebrow {
+            display: inline-block;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: var(--ink-muted);
+            margin-bottom: 6px;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            font-weight: 600;
+            letter-spacing: -0.025em;
+            color: var(--ink-primary);
+            line-height: 1.2;
+        }
+
+        @media (min-width: 640px) {
+            .section-title {
+                font-size: 2.125rem;
+            }
+        }
+
+        .section-subtitle {
+            font-size: 0.875rem;
+            color: var(--ink-muted);
+            max-width: 440px;
+        }
+
+        /* Sub-Galleries Grid (Home Page) */
+        .subgalleries-section {
+            margin-bottom: 64px;
+        }
+
+        .subgalleries-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        @media (min-width: 640px) {
+            .subgalleries-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .subgalleries-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .subgallery-card {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .subgallery-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--border-bright);
+            box-shadow: 0 18px 36px rgba(0, 0, 0, 0.5);
+        }
+
+        .subgallery-card.active-card {
+            border-color: var(--ink-primary);
+            box-shadow: 0 0 0 1px var(--ink-primary);
+        }
+
+        .subgallery-cover {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 10;
+            background-color: #111115;
+            overflow: hidden;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .subgallery-cover img,
+        .subgallery-cover svg {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.45s ease;
+        }
+
+        .subgallery-card:hover .subgallery-cover img,
+        .subgallery-card:hover .subgallery-cover svg {
+            transform: scale(1.04);
+        }
+
+        .subgallery-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background-color: rgba(13, 13, 15, 0.82);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            font-size: 0.72rem;
+            font-weight: 500;
+            color: var(--ink-primary);
+        }
+
+        .subgallery-body {
+            padding: 18px 20px 20px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            justify-content: space-between;
+            gap: 14px;
+        }
+
+        .subgallery-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--ink-primary);
+            margin-bottom: 6px;
+            letter-spacing: -0.01em;
+        }
+
+        .subgallery-desc {
+            font-size: 0.825rem;
+            color: var(--ink-muted);
+            line-height: 1.5;
+        }
+
+        .subgallery-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--ink-primary);
+            opacity: 0.85;
+            transition: opacity 0.2s ease, gap 0.2s ease;
+        }
+
+        .subgallery-card:hover .subgallery-cta {
+            opacity: 1;
+            gap: 9px;
+        }
+
+        /* Active Sub-Gallery View */
+        .active-subgallery-section {
+            margin-bottom: 64px;
+        }
+
+        .subgallery-banner {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-bright);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            margin-bottom: 28px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+        }
+
+        @media (min-width: 640px) {
+            .subgallery-banner {
+                padding: 32px;
+            }
+        }
+
+        .banner-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        @media (min-width: 768px) {
+            .banner-layout {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+            }
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.78rem;
+            color: var(--ink-muted);
+            margin-bottom: 8px;
+        }
+
+        .breadcrumb-link {
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            color: var(--ink-muted);
+        }
+
+        .breadcrumb-link:hover {
+            color: var(--ink-primary);
+        }
+
+        .banner-title {
+            font-size: 1.75rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+        }
+
+        @media (min-width: 640px) {
+            .banner-title {
+                font-size: 2.25rem;
+            }
+        }
+
+        .banner-desc {
+            font-size: 0.9rem;
+            color: var(--ink-muted);
+            max-width: 640px;
+        }
+
+        /* Filter Bar inside Active Sub-Gallery */
+        .filter-toolbar {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            padding-bottom: 20px;
+            margin-bottom: 28px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        @media (min-width: 768px) {
+            .filter-toolbar {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+            }
+        }
+
+        .filter-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .filter-btn {
+            padding: 8px 14px;
+            border-radius: var(--radius-md);
+            font-size: 0.8125rem;
+            font-weight: 500;
+            background-color: var(--bg-surface);
+            color: var(--ink-muted);
+            border: 1px solid var(--border-subtle);
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn:hover {
+            color: var(--ink-primary);
+            border-color: var(--border-bright);
+        }
+
+        .filter-btn.active {
+            background-color: var(--ink-primary);
+            color: var(--bg-obsidian);
+            border-color: var(--ink-primary);
+            font-weight: 600;
+        }
+
+        .artwork-counter {
+            font-size: 0.8rem;
+            color: var(--ink-muted);
+        }
+
+        /* Variable Aspect-Ratio Masonry Grid */
+        .masonry-grid {
+            columns: 1;
+            column-gap: 20px;
+        }
+
+        @media (min-width: 640px) {
+            .masonry-grid {
+                columns: 2;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .masonry-grid {
+                columns: 3;
+            }
+        }
+
+        .art-card {
+            break-inside: avoid;
+            margin-bottom: 20px;
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .art-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--border-bright);
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.5);
+        }
+
+        .art-media {
+            position: relative;
+            width: 100%;
+            background-color: #101014;
+            overflow: hidden;
+        }
+
+        .art-media img,
+        .art-media svg {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.45s ease;
+        }
+
+        .art-card:hover .art-media img,
+        .art-card:hover .art-media svg {
+            transform: scale(1.03);
+        }
+
+        .art-meta {
+            padding: 16px 18px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .art-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--ink-primary);
+            margin-bottom: 3px;
+        }
+
+        .art-subtitle {
+            font-size: 0.78rem;
+            color: var(--ink-muted);
+        }
+
+        .art-year {
+            font-size: 0.75rem;
+            color: var(--ink-muted);
+            padding: 3px 8px;
+            border-radius: 6px;
+            background-color: var(--bg-obsidian);
+            border: 1px solid var(--border-subtle);
+            white-space: nowrap;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 56px 24px;
+            background-color: var(--bg-surface);
+            border: 1px dashed var(--border-subtle);
+            border-radius: var(--radius-lg);
+            color: var(--ink-muted);
+        }
+
+        /* About & Contact Sections */
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        @media (min-width: 768px) {
+            .info-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .info-card {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .info-card h2 {
+            font-size: 1.35rem;
+            font-weight: 600;
+            letter-spacing: -0.015em;
+            margin-bottom: 10px;
+        }
+
+        .info-card p {
+            font-size: 0.9rem;
+            color: var(--ink-muted);
+            line-height: 1.65;
+        }
+
+        .tag-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .skill-tag {
+            font-size: 0.75rem;
+            padding: 5px 11px;
+            border-radius: 999px;
+            background-color: var(--bg-obsidian);
+            border: 1px solid var(--border-subtle);
+            color: var(--ink-muted);
+        }
+
+        .contact-actions {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Footer */
+        .site-footer {
+            border-top: 1px solid var(--border-subtle);
+            padding: 28px 0;
+            color: var(--ink-muted);
+            font-size: 0.8125rem;
+        }
+
+        .footer-inner {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        @media (min-width: 640px) {
+            .footer-inner {
+                flex-direction: row;
+            }
+        }
+
+        /* Full-Screen Lightbox Modal */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 60;
+            background-color: rgba(7, 7, 9, 0.92);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+
+        .lightbox-dialog {
+            position: relative;
+            width: 100%;
+            max-width: 1120px;
+            max-height: 92vh;
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-bright);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr;
+            box-shadow: 0 28px 64px rgba(0, 0, 0, 0.75);
+        }
+
+        @media (min-width: 900px) {
+            .lightbox-dialog {
+                grid-template-columns: 1.5fr 1fr;
+            }
+        }
+
+        .lightbox-stage {
+            position: relative;
+            background-color: #09090b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            min-height: 300px;
+            max-height: 60vh;
+            overflow: hidden;
+        }
+
+        @media (min-width: 900px) {
+            .lightbox-stage {
+                max-height: 92vh;
+                min-height: 520px;
+            }
+        }
+
+        .lightbox-stage img,
+        .lightbox-stage svg {
+            max-width: 100%;
+            max-height: 76vh;
+            width: auto;
+            height: auto;
+            border-radius: var(--radius-md);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+        }
+
+        .lightbox-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(21, 21, 25, 0.85);
+            border: 1px solid var(--border-bright);
+            color: var(--ink-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s ease;
+        }
+
+        .lightbox-nav-btn:hover {
+            background-color: var(--ink-primary);
+            color: var(--bg-obsidian);
+        }
+
+        .lightbox-prev { left: 14px; }
+        .lightbox-next { right: 14px; }
+
+        .lightbox-sidebar {
+            padding: 24px 28px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 24px;
+            overflow-y: auto;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        @media (min-width: 900px) {
+            .lightbox-sidebar {
+                border-top: none;
+                border-left: 1px solid var(--border-subtle);
+            }
+        }
+
+        .lightbox-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .close-modal-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background-color: var(--bg-obsidian);
+            border: 1px solid var(--border-subtle);
+            color: var(--ink-muted);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .close-modal-btn:hover {
+            color: var(--ink-primary);
+            border-color: var(--border-bright);
+        }
+
+        .spec-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-subtle);
+            font-size: 0.825rem;
+        }
+
+        .spec-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .spec-label {
+            color: var(--ink-muted);
+        }
+
+        .spec-value {
+            color: var(--ink-primary);
+            font-weight: 500;
+            text-align: right;
+        }
+
+        /* Upload / Test Artwork Modal */
+        .upload-dialog {
+            width: 100%;
+            max-width: 500px;
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-bright);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            box-shadow: 0 24px 56px rgba(0, 0, 0, 0.75);
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--ink-muted);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: var(--radius-md);
+            background-color: var(--bg-obsidian);
+            border: 1px solid var(--border-subtle);
+            color: var(--ink-primary);
+            font-size: 0.875rem;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--ink-primary);
+        }
+
+        .dropzone {
+            border: 1.5px dashed var(--border-bright);
+            border-radius: var(--radius-md);
+            padding: 24px 16px;
+            text-align: center;
+            background-color: var(--bg-obsidian);
+            cursor: pointer;
+            transition: border-color 0.2s ease, background-color 0.2s ease;
+        }
+
+        .dropzone:hover {
+            border-color: var(--ink-primary);
+            background-color: #121216;
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 80;
+            padding: 12px 18px;
+            border-radius: var(--radius-md);
+            background-color: var(--ink-primary);
+            color: var(--bg-obsidian);
+            font-size: 0.825rem;
+            font-weight: 600;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5);
+            transition: opacity 0.25s ease, transform 0.25s ease;
+        }
+
+        /* Admin Access Controls & Badges */
+        .admin-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 11px;
+            border-radius: 999px;
+            background-color: rgba(52, 211, 153, 0.14);
+            border: 1px solid rgba(52, 211, 153, 0.4);
+            color: #6ee7b7;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .admin-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background-color: #34d399;
+        }
+
+        .admin-trigger-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 10px;
+            border-radius: 8px;
+            border: 1px solid var(--border-subtle);
+            color: var(--ink-muted);
+            font-size: 0.75rem;
+            transition: color 0.2s ease, border-color 0.2s ease;
+        }
+
+        .admin-trigger-btn:hover {
+            color: var(--ink-primary);
+            border-color: var(--border-bright);
+        }
+
+        .card-delete-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 10;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background-color: rgba(13, 13, 15, 0.88);
+            border: 1px solid rgba(248, 113, 113, 0.45);
+            color: #f87171;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .card-delete-btn:hover {
+            background-color: #ef4444;
+            color: #ffffff;
+        }
+
+        .btn-danger {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 9px 14px;
+            border-radius: var(--radius-md);
+            background-color: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.45);
+            color: #fca5a5;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .btn-danger:hover {
+            background-color: #ef4444;
+            color: #ffffff;
+        }
+
+        .admin-dialog {
+            width: 100%;
+            max-width: 560px;
+            max-height: 90vh;
+            overflow-y: auto;
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-bright);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            box-shadow: 0 24px 56px rgba(0, 0, 0, 0.8);
+        }
+
+        .admin-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .admin-tab-btn {
+            padding: 7px 14px;
+            border-radius: var(--radius-sm);
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: var(--ink-muted);
+            background-color: var(--bg-obsidian);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .admin-tab-btn.active {
+            background-color: var(--ink-primary);
+            color: var(--bg-obsidian);
+            border-color: var(--ink-primary);
+            font-weight: 600;
+        }
+
+        .admin-help-box {
+            padding: 12px 14px;
+            border-radius: var(--radius-md);
+            background-color: var(--bg-obsidian);
+            border: 1px solid var(--border-subtle);
+            font-size: 0.78rem;
+            color: var(--ink-muted);
+            line-height: 1.55;
+            margin-bottom: 16px;
+        }
+
+        /* Smooth Page View Transition */
+        .page-view {
+            animation: pageFadeIn 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes pageFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sticky Minimal Navigation Bar -->
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="./" id="brandHomeLink" class="brand-logo" aria-label="Gumtha Universe Home">
+                <span class="brand-mark">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="9"></circle>
+                        <path d="M12 3a9 9 0 0 1 9 9"></path>
+                        <circle cx="12" cy="12" r="3" fill="currentColor"></circle>
+                    </svg>
+                </span>
+                <span>Gumtha Universe</span>
+            </a>
+
+            <nav class="nav-actions" aria-label="Primary Navigation">
+                <a href="./#sub-galleries" id="navSubGalleriesLink" class="nav-link hide-mobile">Sub-Galleries</a>
+                <a href="./#about" id="navAboutLink" class="nav-link">About</a>
+                <a href="./#contact" id="navContactLink" class="nav-link">Contact</a>
+                <button id="adminNavStatusBtn" type="button" class="admin-badge hidden" title="Open Admin Studio">
+                    <span class="admin-dot"></span>
+                    <span>Admin</span>
+                </button>
+                <button id="openUploadModalBtn" class="btn-primary" type="button">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path>
+                    </svg>
+                    <span id="primaryActionLabel">Test Artwork</span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- HOME PAGE VIEW: Curated Sub-Galleries, About & Contact -->
+        <div id="homePageView" class="page-view">
+            <section id="sub-galleries" class="subgalleries-section" aria-label="Sub-Galleries and Collections">
+                <div class="section-header">
+                    <div>
+                        <span class="eyebrow">Curated Worlds &amp; Series</span>
+                        <h1 class="section-title">Sub-Galleries &amp; Collections</h1>
+                    </div>
+                    <p class="section-subtitle">
+                        Select a visual series below to open its dedicated gallery page featuring standalone worlds, character lore, and atmospheric digital illustrations across the Gumtha Universe.
+                    </p>
+                </div>
+
+                <div id="subGalleriesGrid" class="subgalleries-grid">
+                    <!-- Populated dynamically via JavaScript -->
+                </div>
+            </section>
+
+            <!-- About & Contact Sections -->
+            <section class="info-grid" aria-label="About and Contact">
+                <article id="about" class="info-card">
+                    <div>
+                        <span class="eyebrow">The Artist</span>
+                        <h2>About Gumtha Universe</h2>
+                        <p>
+                            Gumtha Universe is an independent digital illustration archive exploring atmospheric worldbuilding, expressive character design, and nocturnal color storytelling. Every piece is crafted from initial thumbnail sketches to final lighting passes.
+                        </p>
+                        <div class="tag-row">
+                            <span class="skill-tag">Procreate</span>
+                            <span class="skill-tag">Clip Studio Paint</span>
+                            <span class="skill-tag">Adobe Photoshop</span>
+                            <span class="skill-tag">Visual Development</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article id="contact" class="info-card">
+                    <div>
+                        <span class="eyebrow">Inquiries &amp; Commissions</span>
+                        <h2>Get in Touch</h2>
+                        <p>
+                            Available for book covers, editorial illustration, character concept sheets, and album artwork. Reach out directly to discuss timelines and project scope.
+                        </p>
+                    </div>
+                    <div class="contact-actions">
+                        <button type="button" id="copyEmailBtn" class="btn-primary">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                            <span>Copy hello@gumthauniverse.art</span>
+                        </button>
+                        <a href="#sub-galleries" class="btn-secondary">Browse Series</a>
+                    </div>
+                </article>
+            </section>
+        </div>
+
+        <!-- STANDALONE SUB-GALLERY PAGE VIEW (Dedicated Route: ?gallery=<id> / #/gallery/<id>) -->
+        <section id="subGalleryPageView" class="active-subgallery-section page-view hidden" aria-label="Standalone Sub-Gallery Page">
+            <div class="subgallery-banner">
+                <div class="banner-layout">
+                    <div>
+                        <nav class="breadcrumb" aria-label="Breadcrumb">
+                            <a href="./" id="breadcrumbHomeLink" class="breadcrumb-link">Home</a>
+                            <span>/</span>
+                            <a href="./#sub-galleries" id="breadcrumbSubGalleriesLink" class="breadcrumb-link">Sub-Galleries</a>
+                            <span>/</span>
+                            <span id="activeSubGalleryTag" style="color: var(--ink-primary); font-weight: 500;">Collection</span>
+                        </nav>
+                        <h1 id="activeSubGalleryTitle" class="banner-title">Sub-Gallery Title</h1>
+                        <p id="activeSubGalleryDesc" class="banner-desc">Sub-gallery description.</p>
+                    </div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                        <a href="./" id="exitSubGalleryBtn" class="btn-secondary">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                            </svg>
+                            <span>Back to Home</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filter Bar inside Standalone Sub-Gallery Page -->
+            <div class="filter-toolbar">
+                <div id="filterBar" class="filter-pills" role="tablist" aria-label="Series Categories">
+                    <button type="button" data-filter="All" class="filter-btn active">All in Series</button>
+                    <button type="button" data-filter="Character Art" class="filter-btn">Character Art</button>
+                    <button type="button" data-filter="Environments" class="filter-btn">Environments</button>
+                    <button type="button" data-filter="Editorial & Comics" class="filter-btn">Editorial &amp; Comics</button>
+                    <button type="button" data-filter="Studies" class="filter-btn">Studies</button>
+                </div>
+                <span id="artworkCount" class="artwork-counter">Showing 0 illustrations</span>
+            </div>
+
+            <!-- Full Masonry Grid for Selected Sub-Gallery Page -->
+            <div id="galleryGrid" class="masonry-grid">
+                <!-- Populated dynamically via JavaScript -->
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <span>&copy; 2026 Gumtha Universe. All artworks reserved.</span>
+            <div style="display: flex; align-items: center; gap: 14px;">
+                <span>Minimalist Obsidian Gallery</span>
+                <button type="button" id="footerAdminBtn" class="admin-trigger-btn" aria-label="Admin Access">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                    <span id="footerAdminLabel">Admin</span>
+                </button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Full-Screen Lightbox Modal -->
+    <div id="lightboxModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="lightboxTitle">
+        <div class="lightbox-dialog">
+            <div class="lightbox-stage">
+                <button type="button" id="lightboxPrevBtn" class="lightbox-nav-btn lightbox-prev" aria-label="Previous illustration">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path>
+                    </svg>
+                </button>
+                <div id="lightboxMediaContainer"></div>
+                <button type="button" id="lightboxNextBtn" class="lightbox-nav-btn lightbox-next" aria-label="Next illustration">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="lightbox-sidebar">
+                <div>
+                    <div class="lightbox-header">
+                        <div>
+                            <span id="lightboxSeriesBadge" class="eyebrow">Sub-Gallery</span>
+                            <h3 id="lightboxTitle" style="font-size: 1.35rem; font-weight: 600; margin-bottom: 8px;">Illustration Title</h3>
+                        </div>
+                        <button type="button" id="closeLightboxBtn" class="close-modal-btn" aria-label="Close lightbox">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <p id="lightboxNotes" style="font-size: 0.875rem; color: var(--ink-muted); line-height: 1.6; margin-top: 8px;">
+                        Process notes and visual description.
+                    </p>
+                </div>
+
+                <div class="spec-list">
+                    <div class="spec-row">
+                        <span class="spec-label">Category</span>
+                        <span id="lightboxCategory" class="spec-value">Character Art</span>
+                    </div>
+                    <div class="spec-row">
+                        <span class="spec-label">Year</span>
+                        <span id="lightboxYear" class="spec-value">2026</span>
+                    </div>
+                    <div class="spec-row">
+                        <span class="spec-label">Tools</span>
+                        <span id="lightboxTools" class="spec-value">Procreate</span>
+                    </div>
+                    <div class="spec-row">
+                        <span class="spec-label">Dimensions</span>
+                        <span id="lightboxDimensions" class="spec-value">2400 × 3200 px</span>
+                    </div>
+                    <div id="lightboxAdminActions" class="hidden" style="margin-top: 12px; display: flex; justify-content: flex-end;">
+                        <button type="button" id="lightboxDeleteBtn" class="btn-danger">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="3 6 5 6 21 6"></polyline>
+                                <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path>
+                                <path d="M10 11v6M14 11v6"></path>
+                            </svg>
+                            <span>Delete Artwork</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Local Artwork Upload / GitHub Publish Modal -->
+    <div id="uploadModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="uploadModalTitle">
+        <div class="upload-dialog">
+            <div class="lightbox-header" style="margin-bottom: 18px;">
+                <div>
+                    <span id="uploadModalEyebrow" class="eyebrow">Local Preview</span>
+                    <h3 id="uploadModalTitle" style="font-size: 1.25rem; font-weight: 600;">Test Your Artwork</h3>
+                </div>
+                <button type="button" id="closeUploadModalBtn" class="close-modal-btn" aria-label="Close upload modal">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <form id="uploadForm">
+                <div class="form-group">
+                    <label class="form-label" for="artFileInput">Select Image File (PNG, JPG, WEBP)</label>
+                    <div id="dropzoneArea" class="dropzone">
+                        <p id="fileNameDisplay" style="font-size: 0.85rem; color: var(--ink-primary); font-weight: 500;">
+                            Click to choose an illustration from your device
+                        </p>
+                        <p id="uploadModeHint" style="font-size: 0.75rem; color: var(--ink-muted); margin-top: 4px;">
+                            Renders locally in your browser — nothing is uploaded externally
+                        </p>
+                        <input id="artFileInput" type="file" accept="image/*" class="hidden" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="artTitleInput">Artwork Title</label>
+                    <input id="artTitleInput" type="text" class="form-control" placeholder="e.g., Solstice Traveler" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="artSubGallerySelect">Target Sub-Gallery</label>
+                    <select id="artSubGallerySelect" class="form-control">
+                        <option value="gumtha-island">Gumtha Island Chronicles</option>
+                        <option value="character-lore">Character Portraits &amp; Lore</option>
+                        <option value="nocturnal-env">Nocturnal Environments</option>
+                        <option value="vector-studies">Vector &amp; Editorial Studies</option>
+                    </select>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div class="form-group">
+                        <label class="form-label" for="artCategorySelect">Category</label>
+                        <select id="artCategorySelect" class="form-control">
+                            <option value="Character Art">Character Art</option>
+                            <option value="Environments">Environments</option>
+                            <option value="Editorial & Comics">Editorial &amp; Comics</option>
+                            <option value="Studies">Studies</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="artToolsInput">Tools Used</label>
+                        <input id="artToolsInput" type="text" class="form-control" value="Procreate" placeholder="e.g., Procreate, Photoshop">
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 22px;">
+                    <label class="form-label" for="artNotesInput">Artist Notes (Optional)</label>
+                    <textarea id="artNotesInput" rows="2" class="form-control" placeholder="Lighting study, brush notes, or story context..."></textarea>
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; gap: 10px;">
+                    <button type="button" id="cancelUploadBtn" class="btn-secondary">Cancel</button>
+                    <button type="submit" id="submitUploadBtn" class="btn-primary">Add to Sub-Gallery</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- GitHub Admin Studio Modal -->
+    <div id="adminModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="adminModalTitle">
+        <div class="admin-dialog">
+            <div class="lightbox-header" style="margin-bottom: 16px;">
+                <div>
+                    <span class="eyebrow">GitHub Repository Sync</span>
+                    <h3 id="adminModalTitle" style="font-size: 1.3rem; font-weight: 600;">Gumtha Universe Admin</h3>
+                </div>
+                <button type="button" id="closeAdminModalBtn" class="close-modal-btn" aria-label="Close admin panel">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="admin-tabs">
+                <button type="button" id="tabConnectionBtn" class="admin-tab-btn active">GitHub Connection</button>
+                <button type="button" id="tabManageBtn" class="admin-tab-btn">Manage Artworks</button>
+            </div>
+
+            <!-- Tab 1: GitHub Repo & Token Setup -->
+            <div id="adminConnectionPane">
+                <div class="admin-help-box">
+                    Connect your GitHub repository to publish and delete illustrations permanently from your browser. Your token is stored only in this browser's <code>localStorage</code> and commits directly to <code>images/</code> and <code>artworks.json</code> in your repo.
+                </div>
+
+                <form id="githubConfigForm">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                        <div class="form-group">
+                            <label class="form-label" for="ghOwnerInput">GitHub Username</label>
+                            <input id="ghOwnerInput" type="text" class="form-control" placeholder="e.g., gumtha" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="ghRepoInput">Repository Name</label>
+                            <input id="ghRepoInput" type="text" class="form-control" placeholder="e.g., gumtha-universe" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="ghBranchInput">Branch</label>
+                        <input id="ghBranchInput" type="text" class="form-control" value="main" placeholder="main" required>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 20px;">
+                        <label class="form-label" for="ghTokenInput">GitHub Personal Access Token (repo / Contents Read &amp; Write)</label>
+                        <input id="ghTokenInput" type="password" class="form-control" placeholder="github_pat_... or ghp_..." required>
+                    </div>
+
+                    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px;">
+                        <button type="button" id="disconnectGithubBtn" class="btn-danger hidden">Log Out / Disconnect</button>
+                        <div style="display: flex; gap: 10px; margin-left: auto;">
+                            <button type="button" id="syncFromGithubBtn" class="btn-secondary">Sync Now</button>
+                            <button type="submit" id="saveGithubBtn" class="btn-primary">Connect &amp; Verify</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Tab 2: Manage & Delete Artworks -->
+            <div id="adminManagePane" class="hidden">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+                    <span id="adminTotalArtworksLabel" style="font-size: 0.82rem; color: var(--ink-muted);">0 artworks in catalog</span>
+                    <button type="button" id="adminQuickUploadBtn" class="btn-primary">+ Publish New Artwork</button>
+                </div>
+                <div id="adminArtworkList" style="display: flex; flex-direction: column; gap: 10px; max-height: 340px; overflow-y: auto;">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Feedback -->
+    <div id="toastNotification" class="toast hidden" role="status" aria-live="polite"></div>
+
+    <script>
+        // Bespoke Vector SVG Generator for Self-Contained Crisp Illustrations
+        function createIllustrationSVG({ palette, motif, aspect = '3/4' }) {
+            const [bg1, bg2, accent1, accent2, glow] = palette;
+            const dims = {
+                '3/4': { w: 600, h: 800 },
+                '16/10': { w: 800, h: 500 },
+                '1/1': { w: 700, h: 700 },
+                '4/3': { w: 800, h: 600 }
+            }[aspect] || { w: 600, h: 800 };
+
+            const uid = 'grad_' + Math.random().toString(36).slice(2, 9);
+
+            let shapes = '';
+            if (motif === 'island') {
+                shapes = `
+                    <circle cx="${dims.w * 0.72}" cy="${dims.h * 0.26}" r="${dims.w * 0.14}" fill="url(#${uid}_sun)" opacity="0.92"/>
+                    <path d="M0 ${dims.h * 0.68} Q ${dims.w * 0.25} ${dims.h * 0.42}, ${dims.w * 0.52} ${dims.h * 0.62} T ${dims.w} ${dims.h * 0.54} L ${dims.w} ${dims.h} L 0 ${dims.h} Z" fill="${accent1}" opacity="0.85"/>
+                    <path d="M0 ${dims.h * 0.76} Q ${dims.w * 0.35} ${dims.h * 0.66}, ${dims.w * 0.68} ${dims.h * 0.78} T ${dims.w} ${dims.h * 0.72} L ${dims.w} ${dims.h} L 0 ${dims.h} Z" fill="${accent2}"/>
+                    <circle cx="${dims.w * 0.32}" cy="${dims.h * 0.34}" r="3" fill="${glow}"/>
+                    <circle cx="${dims.w * 0.48}" cy="${dims.h * 0.22}" r="2" fill="${glow}"/>
+                `;
+            } else if (motif === 'character') {
+                shapes = `
+                    <circle cx="${dims.w * 0.5}" cy="${dims.h * 0.42}" r="${dims.w * 0.28}" fill="url(#${uid}_sun)" opacity="0.28"/>
+                    <circle cx="${dims.w * 0.5}" cy="${dims.h * 0.38}" r="${dims.w * 0.13}" fill="${accent1}"/>
+                    <path d="M${dims.w * 0.24} ${dims.h} C ${dims.w * 0.26} ${dims.h * 0.62}, ${dims.w * 0.74} ${dims.h * 0.62}, ${dims.w * 0.76} ${dims.h} Z" fill="${accent2}"/>
+                    <polygon points="${dims.w * 0.5},${dims.h * 0.16} ${dims.w * 0.56},${dims.h * 0.26} ${dims.w * 0.44},${dims.h * 0.26}" fill="${glow}"/>
+                `;
+            } else if (motif === 'nocturnal') {
+                shapes = `
+                    <circle cx="${dims.w * 0.28}" cy="${dims.h * 0.28}" r="${dims.w * 0.09}" fill="${glow}" opacity="0.9"/>
+                    <rect x="${dims.w * 0.16}" y="${dims.h * 0.46}" width="${dims.w * 0.14}" height="${dims.h * 0.54}" rx="6" fill="${accent1}"/>
+                    <rect x="${dims.w * 0.36}" y="${dims.h * 0.36}" width="${dims.w * 0.18}" height="${dims.h * 0.64}" rx="6" fill="${accent2}"/>
+                    <rect x="${dims.w * 0.62}" y="${dims.h * 0.50}" width="${dims.w * 0.22}" height="${dims.h * 0.50}" rx="6" fill="${accent1}" opacity="0.8"/>
+                    <line x1="0" y1="${dims.h * 0.84}" x2="${dims.w}" y2="${dims.h * 0.84}" stroke="${glow}" stroke-width="2" opacity="0.45"/>
+                `;
+            } else {
+                shapes = `
+                    <rect x="${dims.w * 0.18}" y="${dims.h * 0.18}" width="${dims.w * 0.64}" height="${dims.h * 0.64}" rx="28" fill="none" stroke="${accent1}" stroke-width="4"/>
+                    <circle cx="${dims.w * 0.5}" cy="${dims.h * 0.5}" r="${dims.w * 0.2}" fill="url(#${uid}_sun)"/>
+                    <path d="M${dims.w * 0.2} ${dims.h * 0.74} L ${dims.w * 0.5} ${dims.h * 0.28} L ${dims.w * 0.8} ${dims.h * 0.74} Z" fill="${accent2}" opacity="0.72"/>
+                `;
+            }
+
+            return `
+                <svg viewBox="0 0 ${dims.w} ${dims.h}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Digital Illustration">
+                    <defs>
+                        <linearGradient id="${uid}_bg" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="${bg1}"/>
+                            <stop offset="100%" stop-color="${bg2}"/>
+                        </linearGradient>
+                        <radialGradient id="${uid}_sun" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="${glow}"/>
+                            <stop offset="100%" stop-color="${accent1}" stop-opacity="0.1"/>
+                        </radialGradient>
+                    </defs>
+                    <rect width="${dims.w}" height="${dims.h}" fill="url(#${uid}_bg)"/>
+                    ${shapes}
+                </svg>
+            `;
+        }
+
+        // Sub-Galleries & Collections Data
+        const subGalleries = [
+            {
+                id: 'gumtha-island',
+                title: 'Gumtha Island Chronicles',
+                description: 'Mystical archipelagos, ancient tidal shrines, and sunlit mist horizons across the core Gumtha realm.',
+                coverPalette: ['#131b2e', '#1f2d4a', '#2dd4bf', '#0f766e', '#fde68a'],
+                motif: 'island'
+            },
+            {
+                id: 'character-lore',
+                title: 'Character Portraits & Lore',
+                description: 'Key protagonists, wanderers, and celestial archivists rendered with expressive silhouette and rim light.',
+                coverPalette: ['#1e162b', '#2e1d3d', '#f472b6', '#831843', '#fbcfe8'],
+                motif: 'character'
+            },
+            {
+                id: 'nocturnal-env',
+                title: 'Nocturnal Environments',
+                description: 'Moonlit spires, rain-slicked alleyways, and quiet atmospheric architecture bathed in deep indigo.',
+                coverPalette: ['#0f172a', '#1e1b4b', '#6366f1', '#312e81', '#a5b4fc'],
+                motif: 'nocturnal'
+            },
+            {
+                id: 'vector-studies',
+                title: 'Vector & Editorial Studies',
+                description: 'Graphic book covers, color-value studies, and bold geometric compositions.',
+                coverPalette: ['#1f1916', '#33241d', '#fb923c', '#9a3412', '#fed7aa'],
+                motif: 'editorial'
+            }
+        ];
+
+        // Artworks Data Mapped to Sub-Galleries (Default Starter Catalog; Overridden by artworks.json when hosted)
+        const defaultArtworks = [
+            {
+                id: 1,
+                subGallery: 'gumtha-island',
+                title: 'Tidal Sanctuary at Dawn',
+                category: 'Environments',
+                year: '2026',
+                tools: 'Procreate & Photoshop',
+                dimensions: '3200 × 2000 px',
+                aspect: '16/10',
+                notes: 'Early morning mist rolling over the eastern basalt pillars of Gumtha Island.',
+                palette: ['#131b2e', '#1f2d4a', '#2dd4bf', '#0f766e', '#fde68a'],
+                motif: 'island'
+            },
+            {
+                id: 2,
+                subGallery: 'gumtha-island',
+                title: 'Keeper of the Lantern Reef',
+                category: 'Character Art',
+                year: '2026',
+                tools: 'Clip Studio Paint',
+                dimensions: '2400 × 3200 px',
+                aspect: '3/4',
+                notes: 'Character concept for the coastal guide who charts shifting bioluminescent currents.',
+                palette: ['#0d2229', '#163842', '#38bdf8', '#0369a1', '#bae6fd'],
+                motif: 'character'
+            },
+            {
+                id: 3,
+                subGallery: 'gumtha-island',
+                title: 'Sunken Observatory Steps',
+                category: 'Studies',
+                year: '2025',
+                tools: 'Procreate',
+                dimensions: '2800 × 2800 px',
+                aspect: '1/1',
+                notes: 'Color temperature study balancing warm amber torchlight against deep sea turquoise.',
+                palette: ['#102426', '#1c3b3d', '#34d399', '#065f46', '#fef08a'],
+                motif: 'nocturnal'
+            },
+            {
+                id: 4,
+                subGallery: 'character-lore',
+                title: 'Aurelia — Star Cartographer',
+                category: 'Character Art',
+                year: '2026',
+                tools: 'Clip Studio Paint',
+                dimensions: '2400 × 3200 px',
+                aspect: '3/4',
+                notes: 'Portrait focusing on crimson-violet rim lighting and woven celestial motifs.',
+                palette: ['#1e162b', '#2e1d3d', '#f472b6', '#831843', '#fbcfe8'],
+                motif: 'character'
+            },
+            {
+                id: 5,
+                subGallery: 'character-lore',
+                title: 'The Silent Courier',
+                category: 'Editorial & Comics',
+                year: '2026',
+                tools: 'Photoshop',
+                dimensions: '2600 × 2600 px',
+                aspect: '1/1',
+                notes: 'Key visual from Chapter II depicting the crossing of the Ash Dunes.',
+                palette: ['#241726', '#3b1f3e', '#e879f9', '#701a75', '#f5d0fe'],
+                motif: 'editorial'
+            },
+            {
+                id: 6,
+                subGallery: 'character-lore',
+                title: 'Mask of the Wind Herald',
+                category: 'Studies',
+                year: '2025',
+                tools: 'Procreate',
+                dimensions: '2400 × 3200 px',
+                aspect: '3/4',
+                notes: 'Material rendering test for brushed obsidian and hammered gold filigree.',
+                palette: ['#1b1926', '#2c273d', '#c084fc', '#581c87', '#fde047'],
+                motif: 'character'
+            },
+            {
+                id: 7,
+                subGallery: 'nocturnal-env',
+                title: 'Midnight Spire Overlook',
+                category: 'Environments',
+                year: '2026',
+                tools: 'Photoshop & Blender',
+                dimensions: '3400 × 2125 px',
+                aspect: '16/10',
+                notes: 'Atmospheric perspective study of monolith towers bathed in indigo moonlight.',
+                palette: ['#0f172a', '#1e1b4b', '#6366f1', '#312e81', '#a5b4fc'],
+                motif: 'nocturnal'
+            },
+            {
+                id: 8,
+                subGallery: 'nocturnal-env',
+                title: 'Rain on Meridian Alley',
+                category: 'Environments',
+                year: '2025',
+                tools: 'Procreate',
+                dimensions: '2400 × 3200 px',
+                aspect: '3/4',
+                notes: 'Wet pavement reflections and soft neon signage in the lower district.',
+                palette: ['#0b1324', '#172554', '#3b82f6', '#1d4ed8', '#93c5fd'],
+                motif: 'nocturnal'
+            },
+            {
+                id: 9,
+                subGallery: 'vector-studies',
+                title: 'Solar Eclipse Monograph',
+                category: 'Editorial & Comics',
+                year: '2026',
+                tools: 'Illustrator & Photoshop',
+                dimensions: '2500 × 2500 px',
+                aspect: '1/1',
+                notes: 'Cover illustration exploring geometric framing and warm burnt-sienna gradients.',
+                palette: ['#1f1916', '#33241d', '#fb923c', '#9a3412', '#fed7aa'],
+                motif: 'editorial'
+            },
+            {
+                id: 10,
+                subGallery: 'vector-studies',
+                title: 'Amber Canyon Pass',
+                category: 'Studies',
+                year: '2025',
+                tools: 'Procreate',
+                dimensions: '3200 × 2000 px',
+                aspect: '16/10',
+                notes: 'Four-value gouache-style digital study capturing late afternoon desert shadows.',
+                palette: ['#211712', '#3b261c', '#f59e0b', '#b45309', '#fef3c7'],
+                motif: 'island'
+            }
+        ];
+
+        let artworks = [...defaultArtworks];
+
+        // GitHub Admin Configuration State
+        const GH_STORAGE_KEY = 'gumtha_universe_gh_admin';
+        let githubConfig = null;
+        try {
+            const savedConfig = localStorage.getItem(GH_STORAGE_KEY);
+            if (savedConfig) githubConfig = JSON.parse(savedConfig);
+        } catch (err) {
+            githubConfig = null;
+        }
+
+        function isAdminAuthenticated() {
+            return Boolean(githubConfig && githubConfig.owner && githubConfig.repo && githubConfig.token);
+        }
+
+        // State
+        let currentSubGalleryId = null;
+        let currentFilter = 'All';
+        let activeSeriesArtworks = [];
+        let activeLightboxIndex = 0;
+
+        // DOM Elements
+        const homePageView = document.getElementById('homePageView');
+        const subGalleriesGrid = document.getElementById('subGalleriesGrid');
+        const subGalleryPageView = document.getElementById('subGalleryPageView');
+        const activeSubGalleryTag = document.getElementById('activeSubGalleryTag');
+        const activeSubGalleryTitle = document.getElementById('activeSubGalleryTitle');
+        const activeSubGalleryDesc = document.getElementById('activeSubGalleryDesc');
+        const exitSubGalleryBtn = document.getElementById('exitSubGalleryBtn');
+        const breadcrumbHomeLink = document.getElementById('breadcrumbHomeLink');
+        const breadcrumbSubGalleriesLink = document.getElementById('breadcrumbSubGalleriesLink');
+        const brandHomeLink = document.getElementById('brandHomeLink');
+        const navSubGalleriesLink = document.getElementById('navSubGalleriesLink');
+        const navAboutLink = document.getElementById('navAboutLink');
+        const navContactLink = document.getElementById('navContactLink');
+
+        const galleryGrid = document.getElementById('galleryGrid');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const artworkCount = document.getElementById('artworkCount');
+
+        // Lightbox Elements
+        const lightboxModal = document.getElementById('lightboxModal');
+        const lightboxMediaContainer = document.getElementById('lightboxMediaContainer');
+        const lightboxSeriesBadge = document.getElementById('lightboxSeriesBadge');
+        const lightboxTitle = document.getElementById('lightboxTitle');
+        const lightboxNotes = document.getElementById('lightboxNotes');
+        const lightboxCategory = document.getElementById('lightboxCategory');
+        const lightboxYear = document.getElementById('lightboxYear');
+        const lightboxTools = document.getElementById('lightboxTools');
+        const lightboxDimensions = document.getElementById('lightboxDimensions');
+        const closeLightboxBtn = document.getElementById('closeLightboxBtn');
+        const lightboxPrevBtn = document.getElementById('lightboxPrevBtn');
+        const lightboxNextBtn = document.getElementById('lightboxNextBtn');
+        const lightboxAdminActions = document.getElementById('lightboxAdminActions');
+        const lightboxDeleteBtn = document.getElementById('lightboxDeleteBtn');
+
+        // Upload Modal Elements
+        const uploadModal = document.getElementById('uploadModal');
+        const uploadModalEyebrow = document.getElementById('uploadModalEyebrow');
+        const uploadModalTitle = document.getElementById('uploadModalTitle');
+        const uploadModeHint = document.getElementById('uploadModeHint');
+        const submitUploadBtn = document.getElementById('submitUploadBtn');
+        const primaryActionLabel = document.getElementById('primaryActionLabel');
+        const openUploadModalBtn = document.getElementById('openUploadModalBtn');
+        const closeUploadModalBtn = document.getElementById('closeUploadModalBtn');
+        const cancelUploadBtn = document.getElementById('cancelUploadBtn');
+        const uploadForm = document.getElementById('uploadForm');
+        const dropzoneArea = document.getElementById('dropzoneArea');
+        const artFileInput = document.getElementById('artFileInput');
+        const fileNameDisplay = document.getElementById('fileNameDisplay');
+        const toastNotification = document.getElementById('toastNotification');
+
+        // Admin Modal Elements
+        const adminNavStatusBtn = document.getElementById('adminNavStatusBtn');
+        const footerAdminBtn = document.getElementById('footerAdminBtn');
+        const footerAdminLabel = document.getElementById('footerAdminLabel');
+        const adminModal = document.getElementById('adminModal');
+        const closeAdminModalBtn = document.getElementById('closeAdminModalBtn');
+        const tabConnectionBtn = document.getElementById('tabConnectionBtn');
+        const tabManageBtn = document.getElementById('tabManageBtn');
+        const adminConnectionPane = document.getElementById('adminConnectionPane');
+        const adminManagePane = document.getElementById('adminManagePane');
+        const githubConfigForm = document.getElementById('githubConfigForm');
+        const disconnectGithubBtn = document.getElementById('disconnectGithubBtn');
+        const syncFromGithubBtn = document.getElementById('syncFromGithubBtn');
+        const adminArtworkList = document.getElementById('adminArtworkList');
+        const adminTotalArtworksLabel = document.getElementById('adminTotalArtworksLabel');
+        const adminQuickUploadBtn = document.getElementById('adminQuickUploadBtn');
+
+        function showToast(message) {
+            toastNotification.textContent = message;
+            toastNotification.classList.remove('hidden');
+            clearTimeout(window.__toastTimer);
+            window.__toastTimer = setTimeout(() => {
+                toastNotification.classList.add('hidden');
+            }, 3400);
+        }
+
+        // URL Routing Helpers for Standalone Sub-Gallery Pages
+        function getSubGalleryIdFromURL() {
+            const params = new URLSearchParams(window.location.search);
+            const queryId = params.get('gallery');
+            if (queryId && subGalleries.some(s => s.id === queryId)) {
+                return queryId;
+            }
+            const hashMatch = window.location.hash.match(/^#\/gallery\/([a-z0-9-]+)$/i);
+            if (hashMatch && subGalleries.some(s => s.id === hashMatch[1])) {
+                return hashMatch[1];
+            }
+            return null;
+        }
+
+        function navigateToSubGallery(subGalleryId, pushHistory = true) {
+            if (!subGalleryId) {
+                currentSubGalleryId = null;
+                subGalleryPageView.classList.add('hidden');
+                homePageView.classList.remove('hidden');
+                document.title = 'Gumtha Universe — Digital Illustration Portfolio';
+                renderSubGalleries();
+
+                if (pushHistory) {
+                    try {
+                        const cleanUrl = new URL(window.location.href);
+                        cleanUrl.searchParams.delete('gallery');
+                        cleanUrl.hash = '';
+                        window.history.pushState({ subGalleryId: null }, '', cleanUrl.toString());
+                    } catch (err) {
+                        window.location.hash = '';
+                    }
+                }
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                return;
+            }
+
+            const sg = subGalleries.find(s => s.id === subGalleryId);
+            if (!sg) return;
+
+            currentSubGalleryId = subGalleryId;
+            currentFilter = 'All';
+            filterBtns.forEach(btn => btn.classList.toggle('active', btn.dataset.filter === 'All'));
+
+            activeSubGalleryTag.textContent = sg.title;
+            activeSubGalleryTitle.textContent = sg.title;
+            activeSubGalleryDesc.textContent = sg.description;
+            document.title = `${sg.title} — Gumtha Universe`;
+
+            homePageView.classList.add('hidden');
+            subGalleryPageView.classList.remove('hidden');
+            renderActiveSubGalleryGrid();
+
+            if (pushHistory) {
+                try {
+                    const nextUrl = new URL(window.location.href);
+                    nextUrl.searchParams.set('gallery', subGalleryId);
+                    nextUrl.hash = `/gallery/${subGalleryId}`;
+                    window.history.pushState({ subGalleryId }, '', nextUrl.toString());
+                } catch (err) {
+                    window.location.hash = `/gallery/${subGalleryId}`;
+                }
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Render Curated Sub-Gallery Cards on Home Page
+        function renderSubGalleries() {
+            subGalleriesGrid.innerHTML = '';
+
+            subGalleries.forEach(sg => {
+                const count = artworks.filter(a => a.subGallery === sg.id).length;
+                const firstArtWithImage = artworks.find(a => a.subGallery === sg.id && a.customImageUrl);
+
+                const card = document.createElement('a');
+                card.href = `?gallery=${encodeURIComponent(sg.id)}#/gallery/${encodeURIComponent(sg.id)}`;
+                card.className = 'subgallery-card';
+                card.setAttribute('aria-label', `Open ${sg.title} sub-gallery page`);
+
+                const coverMedia = firstArtWithImage
+                    ? `<img src="${firstArtWithImage.customImageUrl}" alt="${sg.title}" loading="lazy">`
+                    : createIllustrationSVG({ palette: sg.coverPalette, motif: sg.motif, aspect: '16/10' });
+
+                card.innerHTML = `
+                    <div class="subgallery-cover">
+                        ${coverMedia}
+                        <span class="subgallery-badge">${count} ${count === 1 ? 'Work' : 'Works'}</span>
+                    </div>
+                    <div class="subgallery-body">
+                        <div>
+                            <h2 class="subgallery-title">${sg.title}</h2>
+                            <p class="subgallery-desc">${sg.description}</p>
+                        </div>
+                        <span class="subgallery-cta">
+                            <span>Open Gallery Page</span>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 5l7 7-7 7"></path>
+                            </svg>
+                        </span>
+                    </div>
+                `;
+
+                card.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    navigateToSubGallery(sg.id, true);
+                });
+
+                subGalleriesGrid.appendChild(card);
+            });
+        }
+
+        // Update UI Controls Based on Admin Login State
+        function updateAdminUIState() {
+            const loggedIn = isAdminAuthenticated();
+            adminNavStatusBtn.classList.toggle('hidden', !loggedIn);
+            disconnectGithubBtn.classList.toggle('hidden', !loggedIn);
+            footerAdminLabel.textContent = loggedIn ? 'Admin Active' : 'Admin';
+            primaryActionLabel.textContent = loggedIn ? 'Publish Artwork' : 'Test Artwork';
+            uploadModalEyebrow.textContent = loggedIn ? 'GitHub Live Publish' : 'Local Preview';
+            uploadModalTitle.textContent = loggedIn ? 'Publish Artwork to GitHub' : 'Test Your Artwork';
+            uploadModeHint.textContent = loggedIn
+                ? 'Uploads image to images/ and updates artworks.json in your GitHub repository'
+                : 'Renders locally in your browser — connect Admin in footer to publish permanently';
+            submitUploadBtn.textContent = loggedIn ? 'Publish to Site' : 'Add to Sub-Gallery';
+
+            if (loggedIn) {
+                document.getElementById('ghOwnerInput').value = githubConfig.owner;
+                document.getElementById('ghRepoInput').value = githubConfig.repo;
+                document.getElementById('ghBranchInput').value = githubConfig.branch || 'main';
+                document.getElementById('ghTokenInput').value = githubConfig.token;
+            }
+        }
+
+        // GitHub REST API Helper Functions
+        function encodeUTF8ToBase64(str) {
+            const bytes = new TextEncoder().encode(str);
+            let bin = '';
+            bytes.forEach(b => { bin += String.fromCharCode(b); });
+            return btoa(bin);
+        }
+
+        function decodeBase64ToUTF8(b64) {
+            const bin = atob(b64.replace(/\s/g, ''));
+            const bytes = new Uint8Array(bin.length);
+            for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+            return new TextDecoder().decode(bytes);
+        }
+
+        async function githubApiRequest(path, options = {}) {
+            const { owner, repo, token } = githubConfig;
+            const url = `https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/contents/${path}`;
+            const response = await fetch(url, {
+                ...options,
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Accept': 'application/vnd.github+json',
+                    'Content-Type': 'application/json',
+                    ...(options.headers || {})
+                }
+            });
+            if (!response.ok) {
+                const errData = await response.json().catch(() => ({}));
+                throw new Error(errData.message || `GitHub API error (${response.status})`);
+            }
+            return response.json();
+        }
+
+        // Fetch artworks.json from GitHub API (for Admin) or Public Relative Path (for Visitors)
+        async function loadArtworksCatalog() {
+            if (isAdminAuthenticated()) {
+                try {
+                    const branch = encodeURIComponent(githubConfig.branch || 'main');
+                    const data = await githubApiRequest(`artworks.json?ref=${branch}`);
+                    const parsed = JSON.parse(decodeBase64ToUTF8(data.content));
+                    if (Array.isArray(parsed)) {
+                        artworks = parsed;
+                        renderSubGalleries();
+                        if (currentSubGalleryId) renderActiveSubGalleryGrid();
+                        renderAdminArtworkList();
+                        return true;
+                    }
+                } catch (err) {
+                    // artworks.json may not exist yet on first setup; keep defaultArtworks
+                    return false;
+                }
+            }
+
+            try {
+                const res = await fetch(`./artworks.json?v=${Date.now()}`);
+                if (res.ok) {
+                    const parsed = await res.json();
+                    if (Array.isArray(parsed)) {
+                        artworks = parsed;
+                        renderSubGalleries();
+                        if (currentSubGalleryId) renderActiveSubGalleryGrid();
+                        return true;
+                    }
+                }
+            } catch (err) {
+                // Fallback gracefully to built-in starter artworks
+            }
+            return false;
+        }
+
+        // Commit Updated artworks.json to GitHub Repository
+        async function saveArtworksCatalogToGitHub(commitMessage) {
+            const branch = githubConfig.branch || 'main';
+            let existingSha = null;
+            try {
+                const existing = await githubApiRequest(`artworks.json?ref=${encodeURIComponent(branch)}`);
+                existingSha = existing.sha;
+            } catch (err) {
+                existingSha = null;
+            }
+
+            const payload = {
+                message: commitMessage,
+                content: encodeUTF8ToBase64(JSON.stringify(artworks, null, 2)),
+                branch
+            };
+            if (existingSha) payload.sha = existingSha;
+
+            await githubApiRequest('artworks.json', {
+                method: 'PUT',
+                body: JSON.stringify(payload)
+            });
+        }
+
+        // Delete Artwork (and its GitHub image file if hosted in repo)
+        async function deleteArtworkById(artId) {
+            const idx = artworks.findIndex(a => a.id === artId);
+            if (idx === -1) return;
+            const target = artworks[idx];
+
+            if (isAdminAuthenticated()) {
+                try {
+                    showToast(`Removing "${target.title}" from GitHub...`);
+                    const branch = githubConfig.branch || 'main';
+
+                    if (target.repoFilePath) {
+                        try {
+                            const fileInfo = await githubApiRequest(`${target.repoFilePath}?ref=${encodeURIComponent(branch)}`);
+                            await githubApiRequest(target.repoFilePath, {
+                                method: 'DELETE',
+                                body: JSON.stringify({
+                                    message: `Delete artwork image: ${target.title}`,
+                                    sha: fileInfo.sha,
+                                    branch
+                                })
+                            });
+                        } catch (fileErr) {
+                            // Continue removing catalog entry even if image file was already deleted
+                        }
+                    }
+
+                    artworks.splice(idx, 1);
+                    await saveArtworksCatalogToGitHub(`Remove artwork: ${target.title}`);
+                    closeLightbox();
+                    renderSubGalleries();
+                    if (currentSubGalleryId) renderActiveSubGalleryGrid();
+                    renderAdminArtworkList();
+                    showToast(`Deleted "${target.title}" from repository.`);
+                } catch (err) {
+                    showToast(`Delete failed: ${err.message}`);
+                }
+            } else {
+                artworks.splice(idx, 1);
+                closeLightbox();
+                renderSubGalleries();
+                if (currentSubGalleryId) renderActiveSubGalleryGrid();
+                showToast(`Removed "${target.title}" from preview.`);
+            }
+        }
+
+        // Render Artworks Inside Selected Sub-Gallery
+        function renderActiveSubGalleryGrid() {
+            if (!currentSubGalleryId) {
+                galleryGrid.innerHTML = '';
+                return;
+            }
+
+            activeSeriesArtworks = artworks.filter(item => {
+                const matchesSeries = item.subGallery === currentSubGalleryId;
+                const matchesCat = currentFilter === 'All' || item.category === currentFilter;
+                return matchesSeries && matchesCat;
+            });
+
+            const sg = subGalleries.find(s => s.id === currentSubGalleryId);
+            artworkCount.textContent = sg
+                ? `Showing ${activeSeriesArtworks.length} illustration${activeSeriesArtworks.length === 1 ? '' : 's'} in "${sg.title}"`
+                : `Showing ${activeSeriesArtworks.length} illustrations`;
+
+            galleryGrid.innerHTML = '';
+
+            if (activeSeriesArtworks.length === 0) {
+                galleryGrid.innerHTML = `
+                    <div class="empty-state" style="column-span: all;">
+                        <p style="font-size: 0.95rem; color: var(--ink-primary); margin-bottom: 6px;">No illustrations in this category yet</p>
+                        <p style="font-size: 0.82rem;">Switch filter tabs above or click "Test Artwork" to preview your own illustration here.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            activeSeriesArtworks.forEach((art, idx) => {
+                const card = document.createElement('article');
+                card.className = 'art-card';
+                card.tabIndex = 0;
+                card.setAttribute('role', 'button');
+                card.setAttribute('aria-label', `Inspect ${art.title}`);
+
+                const mediaHtml = art.customImageUrl
+                    ? `<img src="${art.customImageUrl}" alt="${art.title}" loading="lazy">`
+                    : createIllustrationSVG({ palette: art.palette, motif: art.motif, aspect: art.aspect });
+
+                const deleteBtnHtml = isAdminAuthenticated()
+                    ? `<button type="button" class="card-delete-btn" data-delete-id="${art.id}" title="Delete artwork" aria-label="Delete ${art.title}">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                                <polyline points="3 6 5 6 21 6"></polyline>
+                                <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path>
+                            </svg>
+                       </button>`
+                    : '';
+
+                card.innerHTML = `
+                    <div class="art-media">
+                        ${deleteBtnHtml}
+                        ${mediaHtml}
+                    </div>
+                    <div class="art-meta">
+                        <div>
+                            <h3 class="art-title">${art.title}</h3>
+                            <p class="art-subtitle">${art.category} &bull; ${art.tools}</p>
+                        </div>
+                        <span class="art-year">${art.year}</span>
+                    </div>
+                `;
+
+                const delBtn = card.querySelector('.card-delete-btn');
+                if (delBtn) {
+                    delBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        deleteArtworkById(art.id);
+                    });
+                }
+
+                card.addEventListener('click', () => openLightbox(idx));
+                card.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        openLightbox(idx);
+                    }
+                });
+
+                galleryGrid.appendChild(card);
+            });
+        }
+
+        // Filter Tab Click Handlers
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                currentFilter = btn.dataset.filter;
+                filterBtns.forEach(b => b.classList.toggle('active', b === btn));
+                renderActiveSubGalleryGrid();
+            });
+        });
+
+        // Lightbox Controls
+        function openLightbox(index) {
+            if (!activeSeriesArtworks.length) return;
+            activeLightboxIndex = index;
+            updateLightboxContent();
+            lightboxModal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            lightboxModal.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        function updateLightboxContent() {
+            const art = activeSeriesArtworks[activeLightboxIndex];
+            if (!art) return;
+
+            const sg = subGalleries.find(s => s.id === art.subGallery);
+            lightboxSeriesBadge.textContent = sg ? sg.title : 'Gumtha Universe';
+            lightboxTitle.textContent = art.title;
+            lightboxNotes.textContent = art.notes;
+            lightboxCategory.textContent = art.category;
+            lightboxYear.textContent = art.year;
+            lightboxTools.textContent = art.tools;
+            lightboxDimensions.textContent = art.dimensions;
+
+            lightboxAdminActions.classList.toggle('hidden', !isAdminAuthenticated());
+            lightboxDeleteBtn.onclick = () => deleteArtworkById(art.id);
+
+            lightboxMediaContainer.innerHTML = art.customImageUrl
+                ? `<img src="${art.customImageUrl}" alt="${art.title}">`
+                : createIllustrationSVG({ palette: art.palette, motif: art.motif, aspect: art.aspect });
+        }
+
+        function showPrevArtwork() {
+            if (!activeSeriesArtworks.length) return;
+            activeLightboxIndex = (activeLightboxIndex - 1 + activeSeriesArtworks.length) % activeSeriesArtworks.length;
+            updateLightboxContent();
+        }
+
+        function showNextArtwork() {
+            if (!activeSeriesArtworks.length) return;
+            activeLightboxIndex = (activeLightboxIndex + 1) % activeSeriesArtworks.length;
+            updateLightboxContent();
+        }
+
+        closeLightboxBtn.addEventListener('click', closeLightbox);
+        lightboxPrevBtn.addEventListener('click', showPrevArtwork);
+        lightboxNextBtn.addEventListener('click', showNextArtwork);
+
+        lightboxModal.addEventListener('click', (e) => {
+            if (e.target === lightboxModal) closeLightbox();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (!lightboxModal.classList.contains('hidden')) {
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft') showPrevArtwork();
+                if (e.key === 'ArrowRight') showNextArtwork();
+            } else if (!uploadModal.classList.contains('hidden')) {
+                if (e.key === 'Escape') closeUploadModal();
+            } else if (!adminModal.classList.contains('hidden')) {
+                if (e.key === 'Escape') closeAdminModal();
+            }
+        });
+
+        // Navigation Back to Home Page from Sub-Gallery Page & Header Links
+        function handleHomeNavigation(e, targetSectionId = null) {
+            e.preventDefault();
+            if (currentSubGalleryId) {
+                navigateToSubGallery(null, true);
+            }
+            if (targetSectionId) {
+                setTimeout(() => {
+                    const el = document.getElementById(targetSectionId);
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }, 40);
+            }
+        }
+
+        exitSubGalleryBtn.addEventListener('click', (e) => handleHomeNavigation(e));
+        breadcrumbHomeLink.addEventListener('click', (e) => handleHomeNavigation(e));
+        breadcrumbSubGalleriesLink.addEventListener('click', (e) => handleHomeNavigation(e, 'sub-galleries'));
+        brandHomeLink.addEventListener('click', (e) => handleHomeNavigation(e));
+        navSubGalleriesLink.addEventListener('click', (e) => handleHomeNavigation(e, 'sub-galleries'));
+        navAboutLink.addEventListener('click', (e) => handleHomeNavigation(e, 'about'));
+        navContactLink.addEventListener('click', (e) => handleHomeNavigation(e, 'contact'));
+
+        // Handle Browser Back / Forward Buttons (popstate & hashchange)
+        window.addEventListener('popstate', () => {
+            const routeId = getSubGalleryIdFromURL();
+            navigateToSubGallery(routeId, false);
+        });
+
+        window.addEventListener('hashchange', () => {
+            const routeId = getSubGalleryIdFromURL();
+            if (routeId !== currentSubGalleryId) {
+                navigateToSubGallery(routeId, false);
+            }
+        });
+
+        // Upload / Test Artwork Modal Controls
+        function openUploadModal() {
+            if (currentSubGalleryId) {
+                document.getElementById('artSubGallerySelect').value = currentSubGalleryId;
+            }
+            uploadModal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeUploadModal() {
+            uploadModal.classList.add('hidden');
+            document.body.style.overflow = '';
+            uploadForm.reset();
+            fileNameDisplay.textContent = 'Click to choose an illustration from your device';
+        }
+
+        openUploadModalBtn.addEventListener('click', openUploadModal);
+        closeUploadModalBtn.addEventListener('click', closeUploadModal);
+        cancelUploadBtn.addEventListener('click', closeUploadModal);
+        uploadModal.addEventListener('click', (e) => {
+            if (e.target === uploadModal) closeUploadModal();
+        });
+
+        dropzoneArea.addEventListener('click', () => artFileInput.click());
+
+        artFileInput.addEventListener('change', () => {
+            const file = artFileInput.files[0];
+            if (file) {
+                fileNameDisplay.textContent = `Selected: ${file.name}`;
+                const titleInput = document.getElementById('artTitleInput');
+                if (!titleInput.value.trim()) {
+                    titleInput.value = file.name.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ');
+                }
+            }
+        });
+
+        uploadForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const file = artFileInput.files[0];
+            if (!file) {
+                showToast('Please select an image file first.');
+                return;
+            }
+
+            const title = document.getElementById('artTitleInput').value.trim() || 'Untitled Study';
+            const subGallery = document.getElementById('artSubGallerySelect').value;
+            const category = document.getElementById('artCategorySelect').value;
+            const tools = document.getElementById('artToolsInput').value.trim() || 'Digital Illustration';
+            const notes = document.getElementById('artNotesInput').value.trim() || 'Digital illustration added to Gumtha Universe.';
+
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const dataUrl = event.target.result;
+                const img = new Image();
+                img.onload = async () => {
+                    const artId = Date.now();
+                    const baseArtwork = {
+                        id: artId,
+                        subGallery,
+                        title,
+                        category,
+                        year: String(new Date().getFullYear()),
+                        tools,
+                        dimensions: `${img.naturalWidth} × ${img.naturalHeight} px`,
+                        notes
+                    };
+
+                    if (isAdminAuthenticated()) {
+                        try {
+                            submitUploadBtn.disabled = true;
+                            submitUploadBtn.textContent = 'Publishing...';
+                            showToast(`Uploading "${title}" to GitHub...`);
+
+                            const ext = (file.name.split('.').pop() || 'png').toLowerCase().replace(/[^a-z0-9]/g, '');
+                            const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'artwork';
+                            const repoFilePath = `images/${slug}-${artId}.${ext}`;
+                            const rawBase64 = dataUrl.split(',')[1];
+                            const branch = githubConfig.branch || 'main';
+
+                            await githubApiRequest(repoFilePath, {
+                                method: 'PUT',
+                                body: JSON.stringify({
+                                    message: `Upload artwork image: ${title}`,
+                                    content: rawBase64,
+                                    branch
+                                })
+                            });
+
+                            const publishedArt = {
+                                ...baseArtwork,
+                                customImageUrl: repoFilePath,
+                                repoFilePath
+                            };
+
+                            artworks.unshift(publishedArt);
+                            await saveArtworksCatalogToGitHub(`Publish artwork: ${title}`);
+
+                            // Display immediate data URL in current session while CDN updates
+                            const sessionDisplayArt = { ...publishedArt, customImageUrl: dataUrl };
+                            artworks[0] = sessionDisplayArt;
+
+                            closeUploadModal();
+                            navigateToSubGallery(subGallery, true);
+                            renderAdminArtworkList();
+                            showToast(`Published "${title}" permanently to GitHub!`);
+                        } catch (err) {
+                            showToast(`Publish failed: ${err.message}`);
+                        } finally {
+                            submitUploadBtn.disabled = false;
+                            updateAdminUIState();
+                        }
+                    } else {
+                        const newArt = {
+                            ...baseArtwork,
+                            customImageUrl: dataUrl
+                        };
+
+                        artworks.unshift(newArt);
+                        closeUploadModal();
+                        navigateToSubGallery(subGallery, true);
+                        showToast(`"${title}" added to your local preview!`);
+                    }
+                };
+                img.src = dataUrl;
+            };
+            reader.readAsDataURL(file);
+        });
+
+        // Admin Studio Modal Controls & Tab Switching
+        function switchAdminTab(tab) {
+            const isConn = tab === 'connection';
+            tabConnectionBtn.classList.toggle('active', isConn);
+            tabManageBtn.classList.toggle('active', !isConn);
+            adminConnectionPane.classList.toggle('hidden', !isConn);
+            adminManagePane.classList.toggle('hidden', isConn);
+            if (!isConn) renderAdminArtworkList();
+        }
+
+        function openAdminModal(defaultTab = 'connection') {
+            updateAdminUIState();
+            switchAdminTab(isAdminAuthenticated() && defaultTab === 'auto' ? 'manage' : (defaultTab === 'auto' ? 'connection' : defaultTab));
+            adminModal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeAdminModal() {
+            adminModal.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        function renderAdminArtworkList() {
+            adminTotalArtworksLabel.textContent = `${artworks.length} artwork${artworks.length === 1 ? '' : 's'} in catalog`;
+            adminArtworkList.innerHTML = '';
+
+            artworks.forEach(art => {
+                const sg = subGalleries.find(s => s.id === art.subGallery);
+                const row = document.createElement('div');
+                row.style.cssText = 'display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 14px;border-radius:10px;background:var(--bg-obsidian);border:1px solid var(--border-subtle);';
+                row.innerHTML = `
+                    <div style="min-width:0;">
+                        <p style="font-size:0.875rem;font-weight:600;color:var(--ink-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${art.title}</p>
+                        <p style="font-size:0.75rem;color:var(--ink-muted);">${sg ? sg.title : art.subGallery} &bull; ${art.category}</p>
+                    </div>
+                    <button type="button" class="btn-danger" style="padding:6px 10px;font-size:0.75rem;">Delete</button>
+                `;
+                row.querySelector('button').addEventListener('click', () => deleteArtworkById(art.id));
+                adminArtworkList.appendChild(row);
+            });
+        }
+
+        footerAdminBtn.addEventListener('click', () => openAdminModal('auto'));
+        adminNavStatusBtn.addEventListener('click', () => openAdminModal('manage'));
+        closeAdminModalBtn.addEventListener('click', closeAdminModal);
+        adminModal.addEventListener('click', (e) => {
+            if (e.target === adminModal) closeAdminModal();
+        });
+
+        tabConnectionBtn.addEventListener('click', () => switchAdminTab('connection'));
+        tabManageBtn.addEventListener('click', () => switchAdminTab('manage'));
+        adminQuickUploadBtn.addEventListener('click', () => {
+            closeAdminModal();
+            openUploadModal();
+        });
+
+        githubConfigForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const owner = document.getElementById('ghOwnerInput').value.trim();
+            const repo = document.getElementById('ghRepoInput').value.trim();
+            const branch = document.getElementById('ghBranchInput').value.trim() || 'main';
+            const token = document.getElementById('ghTokenInput').value.trim();
+
+            githubConfig = { owner, repo, branch, token };
+            const saveBtn = document.getElementById('saveGithubBtn');
+            saveBtn.disabled = true;
+            saveBtn.textContent = 'Verifying...';
+
+            try {
+                const repoCheck = await fetch(`https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Accept': 'application/vnd.github+json'
+                    }
+                });
+                if (!repoCheck.ok) {
+                    throw new Error('Could not access repository. Check username, repo name, and token permissions.');
+                }
+
+                localStorage.setItem(GH_STORAGE_KEY, JSON.stringify(githubConfig));
+                updateAdminUIState();
+                await loadArtworksCatalog();
+                if (currentSubGalleryId) renderActiveSubGalleryGrid();
+                switchAdminTab('manage');
+                showToast(`Connected to ${owner}/${repo}!`);
+            } catch (err) {
+                githubConfig = null;
+                localStorage.removeItem(GH_STORAGE_KEY);
+                updateAdminUIState();
+                showToast(err.message);
+            } finally {
+                saveBtn.disabled = false;
+                saveBtn.textContent = 'Connect & Verify';
+            }
+        });
+
+        syncFromGithubBtn.addEventListener('click', async () => {
+            if (!isAdminAuthenticated()) {
+                showToast('Enter and save your GitHub credentials first.');
+                return;
+            }
+            const loaded = await loadArtworksCatalog();
+            showToast(loaded ? 'Synced latest catalog from GitHub!' : 'No artworks.json in repo yet — publish an artwork to create it.');
+        });
+
+        disconnectGithubBtn.addEventListener('click', () => {
+            githubConfig = null;
+            localStorage.removeItem(GH_STORAGE_KEY);
+            githubConfigForm.reset();
+            document.getElementById('ghBranchInput').value = 'main';
+            updateAdminUIState();
+            if (currentSubGalleryId) renderActiveSubGalleryGrid();
+            showToast('Admin disconnected.');
+        });
+
+        // Copy Email Button (Using iFrame-safe execCommand fallback)
+        document.getElementById('copyEmailBtn').addEventListener('click', () => {
+            const email = 'hello@gumthauniverse.art';
+            const tempInput = document.createElement('input');
+            tempInput.value = email;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            try {
+                document.execCommand('copy');
+                showToast('Copied hello@gumthauniverse.art to clipboard!');
+            } catch (err) {
+                showToast('Contact: hello@gumthauniverse.art');
+            }
+            document.body.removeChild(tempInput);
+        });
+
+        // Initial Boot: Sync Admin State, Load Hosted Catalog if Present, and Route Page
+        updateAdminUIState();
+        renderSubGalleries();
+        const initialSubGalleryId = getSubGalleryIdFromURL();
+        if (initialSubGalleryId) {
+            navigateToSubGallery(initialSubGalleryId, false);
+        }
+        loadArtworksCatalog();
+
+        // Auto-open Admin Modal if visited with ?admin=true
+        if (new URLSearchParams(window.location.search).get('admin') === 'true') {
+            openAdminModal('auto');
+        }
+    </script>
+</body>
+</html>
