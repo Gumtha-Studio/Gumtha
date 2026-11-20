@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gumtha Universe</title>
+    <title>Gumtha Universe — Digital Illustration Portfolio</title>
     <style>
         /* Self-Contained Minimalist Dark Mode Stylesheet — Zero External Dependencies */
         :root {
@@ -1058,7 +1058,7 @@
             </a>
 
             <nav class="nav-actions" aria-label="Primary Navigation">
-                <a href="./#sub-galleries" id="navSubGalleriesLink" class="nav-link hide-mobile">Galleries</a>
+                <a href="./#sub-galleries" id="navSubGalleriesLink" class="nav-link hide-mobile">Sub-Galleries</a>
                 <a href="./#about" id="navAboutLink" class="nav-link">About</a>
                 <a href="./#contact" id="navContactLink" class="nav-link">Contact</a>
                 <button id="adminNavStatusBtn" type="button" class="admin-badge hidden" title="Open Admin Studio">
@@ -1081,11 +1081,11 @@
             <section id="sub-galleries" class="subgalleries-section" aria-label="Sub-Galleries and Collections">
                 <div class="section-header">
                     <div>
-                        <span class="eyebrow"> &amp; Series</span>
-                        <h1 class="section-title">Galleries &amp; Collections</h1>
+                        <span class="eyebrow">Curated Worlds &amp; Series</span>
+                        <h1 class="section-title">Sub-Galleries &amp; Collections</h1>
                     </div>
                     <p class="section-subtitle">
-                        Select a Gallery's below to open its dedicated gallery page of Gumtha Universe.
+                        Select a visual series below to open its dedicated gallery page featuring standalone worlds, character lore, and atmospheric digital illustrations across the Gumtha Universe.
                     </p>
                 </div>
 
@@ -1350,16 +1350,17 @@
                     </svg>
                 </button>
             </div>
-
-            <div class="admin-tabs">
+            <div class="admin-tabs" style="flex-wrap: wrap;">
                 <button type="button" id="tabConnectionBtn" class="admin-tab-btn active">GitHub Connection</button>
                 <button type="button" id="tabManageBtn" class="admin-tab-btn">Manage Artworks</button>
+                <button type="button" id="tabSubGalleriesBtn" class="admin-tab-btn">Sub-Galleries</button>
+                <button type="button" id="tabCategoriesBtn" class="admin-tab-btn">Categories</button>
             </div>
 
             <!-- Tab 1: GitHub Repo & Token Setup -->
             <div id="adminConnectionPane">
                 <div class="admin-help-box">
-                    Connect your GitHub repository to publish and delete illustrations permanently from your browser. Your token is stored only in this browser's <code>localStorage</code> and commits directly to <code>images/</code> and <code>artworks.json</code> in your repo.
+                    Connect your GitHub repository to publish artworks and create new sub-galleries permanently from your browser. Your token is stored only in this browser's <code>localStorage</code> and commits directly to <code>images/</code>, <code>artworks.json</code>, and <code>subgalleries.json</code>.
                 </div>
 
                 <form id="githubConfigForm">
@@ -1401,6 +1402,70 @@
                     <button type="button" id="adminQuickUploadBtn" class="btn-primary">+ Publish New Artwork</button>
                 </div>
                 <div id="adminArtworkList" style="display: flex; flex-direction: column; gap: 10px; max-height: 340px; overflow-y: auto;">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+
+            <!-- Tab 3: Create & Manage Sub-Galleries -->
+            <div id="adminSubGalleriesPane" class="hidden">
+                <form id="createSubGalleryForm" style="margin-bottom: 20px; padding-bottom: 18px; border-bottom: 1px solid var(--border-subtle);">
+                    <div class="form-group">
+                        <label class="form-label" for="newSgTitleInput">New Sub-Gallery Title</label>
+                        <input id="newSgTitleInput" type="text" class="form-control" placeholder="e.g., Skybound Nomads" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="newSgDescInput">Description</label>
+                        <textarea id="newSgDescInput" rows="2" class="form-control" placeholder="Short description of this visual series..." required></textarea>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                        <div class="form-group">
+                            <label class="form-label" for="newSgMotifSelect">Default Cover Style</label>
+                            <select id="newSgMotifSelect" class="form-control">
+                                <option value="island">Island &amp; Horizon</option>
+                                <option value="character">Character Silhouette</option>
+                                <option value="nocturnal">Nocturnal Architecture</option>
+                                <option value="editorial">Geometric &amp; Editorial</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="newSgCoverInput">Custom Cover Image (Optional)</label>
+                            <input id="newSgCoverInput" type="file" accept="image/*" class="form-control" style="padding: 7px 10px; font-size: 0.78rem;">
+                        </div>
+                    </div>
+
+                    <div style="display: flex; justify-content: flex-end; margin-top: 6px;">
+                        <button type="submit" id="createSubGalleryBtn" class="btn-primary">+ Create Sub-Gallery</button>
+                    </div>
+                </form>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <span id="adminTotalSubGalleriesLabel" style="font-size: 0.82rem; color: var(--ink-muted);">4 sub-galleries</span>
+                </div>
+                <div id="adminSubGalleryList" style="display: flex; flex-direction: column; gap: 10px; max-height: 220px; overflow-y: auto;">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+
+            <!-- Tab 4: Create & Manage Categories -->
+            <div id="adminCategoriesPane" class="hidden">
+                <form id="createCategoryForm" style="margin-bottom: 20px; padding-bottom: 18px; border-bottom: 1px solid var(--border-subtle);">
+                    <div class="form-group" style="margin-bottom: 14px;">
+                        <label class="form-label" for="newCategoryNameInput">New Category Name</label>
+                        <input id="newCategoryNameInput" type="text" class="form-control" placeholder="e.g., Concept Sketches, Fan Art, Posters" required>
+                    </div>
+
+                    <div style="display: flex; justify-content: flex-end;">
+                        <button type="submit" id="createCategoryBtn" class="btn-primary">+ Add Category</button>
+                    </div>
+                </form>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <span id="adminTotalCategoriesLabel" style="font-size: 0.82rem; color: var(--ink-muted);">4 categories active</span>
+                </div>
+                <div id="adminCategoryList" style="display: flex; flex-direction: column; gap: 10px; max-height: 260px; overflow-y: auto;">
                     <!-- Populated dynamically -->
                 </div>
             </div>
@@ -1473,8 +1538,8 @@
             `;
         }
 
-        // Sub-Galleries & Collections Data
-        const subGalleries = [
+        // Sub-Galleries & Collections Data (Default Starter Collections; Overridden by subgalleries.json when hosted)
+        const defaultSubGalleries = [
             {
                 id: 'gumtha-island',
                 title: 'Gumtha Island Chronicles',
@@ -1504,6 +1569,18 @@
                 motif: 'editorial'
             }
         ];
+
+        let subGalleries = [...defaultSubGalleries];
+
+        // Categories Data (Default Starter Categories; Overridden by categories.json when hosted)
+        const defaultCategories = [
+            'Character Art',
+            'Environments',
+            'Editorial & Comics',
+            'Studies'
+        ];
+
+        let categories = [...defaultCategories];
 
         // Artworks Data Mapped to Sub-Galleries (Default Starter Catalog; Overridden by artworks.json when hosted)
         const defaultArtworks = [
@@ -1655,6 +1732,91 @@
             return Boolean(githubConfig && githubConfig.owner && githubConfig.repo && githubConfig.token);
         }
 
+        // UTF-8 Safe Base64 Encoding & Decoding for GitHub Contents API
+        function encodeUTF8ToBase64(str) {
+            const bytes = new TextEncoder().encode(str);
+            let binary = '';
+            for (let i = 0; i < bytes.length; i++) {
+                binary += String.fromCharCode(bytes[i]);
+            }
+            return btoa(binary);
+        }
+
+        function decodeBase64ToUTF8(base64) {
+            const clean = base64.replace(/\s/g, '');
+            const binary = atob(clean);
+            const bytes = new Uint8Array(binary.length);
+            for (let i = 0; i < binary.length; i++) {
+                bytes[i] = binary.charCodeAt(i);
+            }
+            return new TextDecoder().decode(bytes);
+        }
+
+        // GitHub Contents API Wrapper
+        async function githubApiRequest(path, options = {}) {
+            if (!isAdminAuthenticated()) {
+                throw new Error('GitHub Admin not connected.');
+            }
+            const owner = encodeURIComponent(githubConfig.owner);
+            const repo = encodeURIComponent(githubConfig.repo);
+            const cleanPath = path.replace(/^\/+/, '');
+            const url = `https://api.github.com/repos/${owner}/${repo}/contents/${cleanPath}`;
+
+            const response = await fetch(url, {
+                ...options,
+                headers: {
+                    'Authorization': `Bearer ${githubConfig.token}`,
+                    'Accept': 'application/vnd.github+json',
+                    'Content-Type': 'application/json',
+                    ...(options.headers || {})
+                }
+            });
+
+            if (!response.ok) {
+                let msg = `GitHub API error (${response.status})`;
+                try {
+                    const errData = await response.json();
+                    if (errData && errData.message) msg = errData.message;
+                } catch (_) {}
+                throw new Error(msg);
+            }
+
+            if (response.status === 204) return null;
+            return response.json();
+        }
+
+        // Sync UI Elements with Admin Authentication State
+        function updateAdminUIState() {
+            const loggedIn = isAdminAuthenticated();
+            if (adminNavStatusBtn) adminNavStatusBtn.classList.toggle('hidden', !loggedIn);
+            if (openUploadModalBtn) openUploadModalBtn.classList.toggle('hidden', !loggedIn);
+            if (disconnectGithubBtn) disconnectGithubBtn.classList.toggle('hidden', !loggedIn);
+            if (footerAdminLabel) footerAdminLabel.textContent = loggedIn ? 'Admin (Connected)' : 'Admin';
+
+            if (loggedIn) {
+                if (primaryActionLabel) primaryActionLabel.textContent = 'Publish Artwork';
+                if (uploadModalEyebrow) uploadModalEyebrow.textContent = 'GitHub Repository Sync';
+                if (uploadModalTitle) uploadModalTitle.textContent = 'Publish Artwork';
+                if (uploadModeHint) uploadModeHint.textContent = `Commits directly to ${githubConfig.owner}/${githubConfig.repo}`;
+                if (submitUploadBtn) submitUploadBtn.textContent = 'Publish to GitHub';
+
+                const ownerInput = document.getElementById('ghOwnerInput');
+                const repoInput = document.getElementById('ghRepoInput');
+                const branchInput = document.getElementById('ghBranchInput');
+                const tokenInput = document.getElementById('ghTokenInput');
+                if (ownerInput && !ownerInput.value) ownerInput.value = githubConfig.owner;
+                if (repoInput && !repoInput.value) repoInput.value = githubConfig.repo;
+                if (branchInput && githubConfig.branch) branchInput.value = githubConfig.branch;
+                if (tokenInput && !tokenInput.value) tokenInput.value = githubConfig.token;
+            } else {
+                if (primaryActionLabel) primaryActionLabel.textContent = 'Test Artwork';
+                if (uploadModalEyebrow) uploadModalEyebrow.textContent = 'Local Preview';
+                if (uploadModalTitle) uploadModalTitle.textContent = 'Test Your Artwork';
+                if (uploadModeHint) uploadModeHint.textContent = 'Renders locally in your browser — nothing is uploaded externally';
+                if (submitUploadBtn) submitUploadBtn.textContent = 'Add to Sub-Gallery';
+            }
+        }
+
         // State
         let currentSubGalleryId = null;
         let currentFilter = 'All';
@@ -1677,7 +1839,7 @@
         const navContactLink = document.getElementById('navContactLink');
 
         const galleryGrid = document.getElementById('galleryGrid');
-        const filterBtns = document.querySelectorAll('.filter-btn');
+        const filterBar = document.getElementById('filterBar');
         const artworkCount = document.getElementById('artworkCount');
 
         // Lightbox Elements
@@ -1720,14 +1882,78 @@
         const closeAdminModalBtn = document.getElementById('closeAdminModalBtn');
         const tabConnectionBtn = document.getElementById('tabConnectionBtn');
         const tabManageBtn = document.getElementById('tabManageBtn');
+        const tabSubGalleriesBtn = document.getElementById('tabSubGalleriesBtn');
+        const tabCategoriesBtn = document.getElementById('tabCategoriesBtn');
         const adminConnectionPane = document.getElementById('adminConnectionPane');
         const adminManagePane = document.getElementById('adminManagePane');
+        const adminSubGalleriesPane = document.getElementById('adminSubGalleriesPane');
+        const adminCategoriesPane = document.getElementById('adminCategoriesPane');
         const githubConfigForm = document.getElementById('githubConfigForm');
         const disconnectGithubBtn = document.getElementById('disconnectGithubBtn');
         const syncFromGithubBtn = document.getElementById('syncFromGithubBtn');
         const adminArtworkList = document.getElementById('adminArtworkList');
         const adminTotalArtworksLabel = document.getElementById('adminTotalArtworksLabel');
         const adminQuickUploadBtn = document.getElementById('adminQuickUploadBtn');
+        const createSubGalleryForm = document.getElementById('createSubGalleryForm');
+        const createSubGalleryBtn = document.getElementById('createSubGalleryBtn');
+        const adminSubGalleryList = document.getElementById('adminSubGalleryList');
+        const adminTotalSubGalleriesLabel = document.getElementById('adminTotalSubGalleriesLabel');
+        const createCategoryForm = document.getElementById('createCategoryForm');
+        const createCategoryBtn = document.getElementById('createCategoryBtn');
+        const adminCategoryList = document.getElementById('adminCategoryList');
+        const adminTotalCategoriesLabel = document.getElementById('adminTotalCategoriesLabel');
+        const artSubGallerySelect = document.getElementById('artSubGallerySelect');
+        const artCategorySelect = document.getElementById('artCategorySelect');
+
+        // Keep Category Filter Pills & Publish Dropdown Synchronized with categories Array
+        function renderCategoryControls() {
+            const prevSelectVal = artCategorySelect.value;
+            artCategorySelect.innerHTML = '';
+            categories.forEach(cat => {
+                const opt = document.createElement('option');
+                opt.value = cat;
+                opt.textContent = cat;
+                artCategorySelect.appendChild(opt);
+            });
+            if (prevSelectVal && categories.includes(prevSelectVal)) {
+                artCategorySelect.value = prevSelectVal;
+            }
+
+            if (currentFilter !== 'All' && !categories.includes(currentFilter)) {
+                currentFilter = 'All';
+            }
+
+            filterBar.innerHTML = '';
+            const allFilters = ['All', ...categories];
+            allFilters.forEach(filterName => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.dataset.filter = filterName;
+                btn.className = 'filter-btn' + (currentFilter === filterName ? ' active' : '');
+                btn.textContent = filterName === 'All' ? 'All in Series' : filterName;
+                btn.addEventListener('click', () => {
+                    currentFilter = filterName;
+                    filterBar.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b === btn));
+                    renderActiveSubGalleryGrid();
+                });
+                filterBar.appendChild(btn);
+            });
+        }
+
+        // Keep Target Sub-Gallery Dropdown Synchronized with subGalleries Array
+        function populateSubGallerySelect() {
+            const previousVal = artSubGallerySelect.value;
+            artSubGallerySelect.innerHTML = '';
+            subGalleries.forEach(sg => {
+                const opt = document.createElement('option');
+                opt.value = sg.id;
+                opt.textContent = sg.title;
+                artSubGallerySelect.appendChild(opt);
+            });
+            if (previousVal && subGalleries.some(s => s.id === previousVal)) {
+                artSubGallerySelect.value = previousVal;
+            }
+        }
 
         function showToast(message) {
             toastNotification.textContent = message;
@@ -1779,7 +2005,7 @@
 
             currentSubGalleryId = subGalleryId;
             currentFilter = 'All';
-            filterBtns.forEach(btn => btn.classList.toggle('active', btn.dataset.filter === 'All'));
+            renderCategoryControls();
 
             activeSubGalleryTag.textContent = sg.title;
             activeSubGalleryTitle.textContent = sg.title;
@@ -1806,6 +2032,7 @@
 
         // Render Curated Sub-Gallery Cards on Home Page
         function renderSubGalleries() {
+            populateSubGallerySelect();
             subGalleriesGrid.innerHTML = '';
 
             subGalleries.forEach(sg => {
@@ -1817,8 +2044,9 @@
                 card.className = 'subgallery-card';
                 card.setAttribute('aria-label', `Open ${sg.title} sub-gallery page`);
 
-                const coverMedia = firstArtWithImage
-                    ? `<img src="${firstArtWithImage.customImageUrl}" alt="${sg.title}" loading="lazy">`
+                const coverSrc = sg.coverImageUrl || (firstArtWithImage ? firstArtWithImage.customImageUrl : null);
+                const coverMedia = coverSrc
+                    ? `<img src="${coverSrc}" alt="${sg.title}" loading="lazy">`
                     : createIllustrationSVG({ palette: sg.coverPalette, motif: sg.motif, aspect: '16/10' });
 
                 card.innerHTML = `
@@ -1848,63 +2076,121 @@
                 subGalleriesGrid.appendChild(card);
             });
         }
-
-        // Update UI Controls Based on Admin Login State
-        function updateAdminUIState() {
-            const loggedIn = isAdminAuthenticated();
-            adminNavStatusBtn.classList.toggle('hidden', !loggedIn);
-            openUploadModalBtn.classList.toggle('hidden', !loggedIn);
-            disconnectGithubBtn.classList.toggle('hidden', !loggedIn);
-            footerAdminLabel.textContent = loggedIn ? 'Admin Active' : 'Admin';
-            primaryActionLabel.textContent = 'Publish Artwork';
-            uploadModalEyebrow.textContent = 'GitHub Live Publish';
-            uploadModalTitle.textContent = 'Publish Artwork to GitHub';
-            uploadModeHint.textContent = 'Uploads image to images/ and updates artworks.json in your GitHub repository';
-            submitUploadBtn.textContent = 'Publish to Site';
-
-            if (loggedIn) {
-                document.getElementById('ghOwnerInput').value = githubConfig.owner;
-                document.getElementById('ghRepoInput').value = githubConfig.repo;
-                document.getElementById('ghBranchInput').value = githubConfig.branch || 'main';
-                document.getElementById('ghTokenInput').value = githubConfig.token;
-            }
-        }
-
-        // GitHub REST API Helper Functions
-        function encodeUTF8ToBase64(str) {
-            const bytes = new TextEncoder().encode(str);
-            let bin = '';
-            bytes.forEach(b => { bin += String.fromCharCode(b); });
-            return btoa(bin);
-        }
-
-        function decodeBase64ToUTF8(b64) {
-            const bin = atob(b64.replace(/\s/g, ''));
-            const bytes = new Uint8Array(bin.length);
-            for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
-            return new TextDecoder().decode(bytes);
-        }
-
-        async function githubApiRequest(path, options = {}) {
-            const { owner, repo, token } = githubConfig;
-            const url = `https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/contents/${path}`;
-            const response = await fetch(url, {
-                ...options,
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Accept': 'application/vnd.github+json',
-                    'Content-Type': 'application/json',
-                    ...(options.headers || {})
+        // Fetch subgalleries.json & artworks.json from GitHub API (for Admin) or Public Relative Path (for Visitors)
+        async function loadSubGalleriesCatalog() {
+            if (isAdminAuthenticated()) {
+                try {
+                    const branch = encodeURIComponent(githubConfig.branch || 'main');
+                    const data = await githubApiRequest(`subgalleries.json?ref=${branch}`);
+                    const parsed = JSON.parse(decodeBase64ToUTF8(data.content));
+                    if (Array.isArray(parsed) && parsed.length > 0) {
+                        subGalleries = parsed;
+                        renderSubGalleries();
+                        renderAdminSubGalleryList();
+                        return true;
+                    }
+                } catch (err) {
+                    return false;
                 }
-            });
-            if (!response.ok) {
-                const errData = await response.json().catch(() => ({}));
-                throw new Error(errData.message || `GitHub API error (${response.status})`);
             }
-            return response.json();
+
+            try {
+                const res = await fetch(`./subgalleries.json?v=${Date.now()}`);
+                if (res.ok) {
+                    const parsed = await res.json();
+                    if (Array.isArray(parsed) && parsed.length > 0) {
+                        subGalleries = parsed;
+                        renderSubGalleries();
+                        return true;
+                    }
+                }
+            } catch (err) {
+                // Fallback gracefully to defaultSubGalleries
+            }
+            return false;
         }
 
-        // Fetch artworks.json from GitHub API (for Admin) or Public Relative Path (for Visitors)
+        async function saveSubGalleriesCatalogToGitHub(commitMessage) {
+            const branch = githubConfig.branch || 'main';
+            let existingSha = null;
+            try {
+                const existing = await githubApiRequest(`subgalleries.json?ref=${encodeURIComponent(branch)}`);
+                existingSha = existing.sha;
+            } catch (err) {
+                existingSha = null;
+            }
+
+            const serialized = subGalleries.map(({ sessionCoverUrl, ...cleanSg }) => cleanSg);
+            const payload = {
+                message: commitMessage,
+                content: encodeUTF8ToBase64(JSON.stringify(serialized, null, 2)),
+                branch
+            };
+            if (existingSha) payload.sha = existingSha;
+
+            await githubApiRequest('subgalleries.json', {
+                method: 'PUT',
+                body: JSON.stringify(payload)
+            });
+        }
+
+        // Fetch & Save categories.json from/to GitHub
+        async function loadCategoriesCatalog() {
+            if (isAdminAuthenticated()) {
+                try {
+                    const branch = encodeURIComponent(githubConfig.branch || 'main');
+                    const data = await githubApiRequest(`categories.json?ref=${branch}`);
+                    const parsed = JSON.parse(decodeBase64ToUTF8(data.content));
+                    if (Array.isArray(parsed) && parsed.length > 0) {
+                        categories = parsed;
+                        renderCategoryControls();
+                        renderAdminCategoryList();
+                        return true;
+                    }
+                } catch (err) {
+                    return false;
+                }
+            }
+
+            try {
+                const res = await fetch(`./categories.json?v=${Date.now()}`);
+                if (res.ok) {
+                    const parsed = await res.json();
+                    if (Array.isArray(parsed) && parsed.length > 0) {
+                        categories = parsed;
+                        renderCategoryControls();
+                        return true;
+                    }
+                }
+            } catch (err) {
+                // Fallback gracefully to defaultCategories
+            }
+            return false;
+        }
+
+        async function saveCategoriesCatalogToGitHub(commitMessage) {
+            const branch = githubConfig.branch || 'main';
+            let existingSha = null;
+            try {
+                const existing = await githubApiRequest(`categories.json?ref=${encodeURIComponent(branch)}`);
+                existingSha = existing.sha;
+            } catch (err) {
+                existingSha = null;
+            }
+
+            const payload = {
+                message: commitMessage,
+                content: encodeUTF8ToBase64(JSON.stringify(categories, null, 2)),
+                branch
+            };
+            if (existingSha) payload.sha = existingSha;
+
+            await githubApiRequest('categories.json', {
+                method: 'PUT',
+                body: JSON.stringify(payload)
+            });
+        }
+
         async function loadArtworksCatalog() {
             if (isAdminAuthenticated()) {
                 try {
@@ -2094,15 +2380,6 @@
                 galleryGrid.appendChild(card);
             });
         }
-
-        // Filter Tab Click Handlers
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                currentFilter = btn.dataset.filter;
-                filterBtns.forEach(b => b.classList.toggle('active', b === btn));
-                renderActiveSubGalleryGrid();
-            });
-        });
 
         // Lightbox Controls
         function openLightbox(index) {
@@ -2337,11 +2614,23 @@
         // Admin Studio Modal Controls & Tab Switching
         function switchAdminTab(tab) {
             const isConn = tab === 'connection';
+            const isManage = tab === 'manage';
+            const isSg = tab === 'subgalleries';
+            const isCat = tab === 'categories';
+
             tabConnectionBtn.classList.toggle('active', isConn);
-            tabManageBtn.classList.toggle('active', !isConn);
+            tabManageBtn.classList.toggle('active', isManage);
+            tabSubGalleriesBtn.classList.toggle('active', isSg);
+            tabCategoriesBtn.classList.toggle('active', isCat);
+
             adminConnectionPane.classList.toggle('hidden', !isConn);
-            adminManagePane.classList.toggle('hidden', isConn);
-            if (!isConn) renderAdminArtworkList();
+            adminManagePane.classList.toggle('hidden', !isManage);
+            adminSubGalleriesPane.classList.toggle('hidden', !isSg);
+            adminCategoriesPane.classList.toggle('hidden', !isCat);
+
+            if (isManage) renderAdminArtworkList();
+            if (isSg) renderAdminSubGalleryList();
+            if (isCat) renderAdminCategoryList();
         }
 
         function openAdminModal(defaultTab = 'connection') {
@@ -2355,6 +2644,228 @@
             adminModal.classList.add('hidden');
             document.body.style.overflow = '';
         }
+
+        function renderAdminCategoryList() {
+            adminTotalCategoriesLabel.textContent = `${categories.length} categor${categories.length === 1 ? 'y' : 'ies'} active`;
+            adminCategoryList.innerHTML = '';
+
+            categories.forEach(cat => {
+                const count = artworks.filter(a => a.category === cat).length;
+                const row = document.createElement('div');
+                row.style.cssText = 'display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 14px;border-radius:10px;background:var(--bg-obsidian);border:1px solid var(--border-subtle);';
+                row.innerHTML = `
+                    <div style="min-width:0;">
+                        <p style="font-size:0.875rem;font-weight:600;color:var(--ink-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${cat}</p>
+                        <p style="font-size:0.75rem;color:var(--ink-muted);">${count} artwork${count === 1 ? '' : 's'} tagged</p>
+                    </div>
+                    <button type="button" class="btn-danger" style="padding:6px 10px;font-size:0.75rem;">Delete</button>
+                `;
+                row.querySelector('button').addEventListener('click', () => deleteCategoryByName(cat));
+                adminCategoryList.appendChild(row);
+            });
+        }
+
+        async function deleteCategoryByName(catName) {
+            if (categories.length <= 1) {
+                showToast('At least one category must remain.');
+                return;
+            }
+            const idx = categories.indexOf(catName);
+            if (idx === -1) return;
+
+            if (isAdminAuthenticated()) {
+                try {
+                    showToast(`Removing "${catName}" from GitHub...`);
+                    categories.splice(idx, 1);
+                    await saveCategoriesCatalogToGitHub(`Remove category: ${catName}`);
+                    renderCategoryControls();
+                    if (currentSubGalleryId) renderActiveSubGalleryGrid();
+                    renderAdminCategoryList();
+                    showToast(`Deleted category "${catName}".`);
+                } catch (err) {
+                    showToast(`Delete failed: ${err.message}`);
+                }
+            } else {
+                categories.splice(idx, 1);
+                renderCategoryControls();
+                if (currentSubGalleryId) renderActiveSubGalleryGrid();
+                renderAdminCategoryList();
+                showToast(`Removed "${catName}".`);
+            }
+        }
+
+        createCategoryForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!isAdminAuthenticated()) {
+                showToast('Connect your GitHub Admin account first.');
+                return;
+            }
+
+            const newCat = document.getElementById('newCategoryNameInput').value.trim();
+            if (!newCat) return;
+
+            if (categories.some(c => c.toLowerCase() === newCat.toLowerCase())) {
+                showToast(`Category "${newCat}" already exists.`);
+                return;
+            }
+
+            try {
+                createCategoryBtn.disabled = true;
+                createCategoryBtn.textContent = 'Adding...';
+
+                categories.push(newCat);
+                await saveCategoriesCatalogToGitHub(`Add category: ${newCat}`);
+
+                createCategoryForm.reset();
+                renderCategoryControls();
+                renderAdminCategoryList();
+                showToast(`Added category "${newCat}"!`);
+            } catch (err) {
+                categories = categories.filter(c => c !== newCat);
+                showToast(`Failed to add category: ${err.message}`);
+            } finally {
+                createCategoryBtn.disabled = false;
+                createCategoryBtn.textContent = '+ Add Category';
+            }
+        });
+
+        function renderAdminSubGalleryList() {
+            adminTotalSubGalleriesLabel.textContent = `${subGalleries.length} sub-galler${subGalleries.length === 1 ? 'y' : 'ies'} active`;
+            adminSubGalleryList.innerHTML = '';
+
+            subGalleries.forEach(sg => {
+                const count = artworks.filter(a => a.subGallery === sg.id).length;
+                const row = document.createElement('div');
+                row.style.cssText = 'display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 14px;border-radius:10px;background:var(--bg-obsidian);border:1px solid var(--border-subtle);';
+                row.innerHTML = `
+                    <div style="min-width:0;">
+                        <p style="font-size:0.875rem;font-weight:600;color:var(--ink-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${sg.title}</p>
+                        <p style="font-size:0.75rem;color:var(--ink-muted);">${count} artwork${count === 1 ? '' : 's'} &bull; ID: ${sg.id}</p>
+                    </div>
+                    <button type="button" class="btn-danger" style="padding:6px 10px;font-size:0.75rem;">Delete</button>
+                `;
+                row.querySelector('button').addEventListener('click', () => deleteSubGalleryById(sg.id));
+                adminSubGalleryList.appendChild(row);
+            });
+        }
+
+        async function deleteSubGalleryById(sgId) {
+            if (subGalleries.length <= 1) {
+                showToast('At least one sub-gallery must remain.');
+                return;
+            }
+            const idx = subGalleries.findIndex(s => s.id === sgId);
+            if (idx === -1) return;
+            const target = subGalleries[idx];
+
+            if (isAdminAuthenticated()) {
+                try {
+                    showToast(`Removing "${target.title}" from GitHub...`);
+                    subGalleries.splice(idx, 1);
+                    await saveSubGalleriesCatalogToGitHub(`Remove sub-gallery: ${target.title}`);
+                    if (currentSubGalleryId === sgId) navigateToSubGallery(null, true);
+                    renderSubGalleries();
+                    renderAdminSubGalleryList();
+                    showToast(`Deleted sub-gallery "${target.title}".`);
+                } catch (err) {
+                    showToast(`Delete failed: ${err.message}`);
+                }
+            } else {
+                subGalleries.splice(idx, 1);
+                if (currentSubGalleryId === sgId) navigateToSubGallery(null, true);
+                renderSubGalleries();
+                renderAdminSubGalleryList();
+                showToast(`Removed "${target.title}".`);
+            }
+        }
+
+        createSubGalleryForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!isAdminAuthenticated()) {
+                showToast('Connect your GitHub Admin account first.');
+                return;
+            }
+
+            const title = document.getElementById('newSgTitleInput').value.trim();
+            const description = document.getElementById('newSgDescInput').value.trim();
+            const motif = document.getElementById('newSgMotifSelect').value;
+            const coverFile = document.getElementById('newSgCoverInput').files[0];
+
+            if (!title) return;
+
+            let baseSlug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'collection';
+            let id = baseSlug;
+            let suffix = 2;
+            while (subGalleries.some(s => s.id === id)) {
+                id = `${baseSlug}-${suffix++}`;
+            }
+
+            const motifPalettes = {
+                island: ['#131b2e', '#1f2d4a', '#2dd4bf', '#0f766e', '#fde68a'],
+                character: ['#1e162b', '#2e1d3d', '#f472b6', '#831843', '#fbcfe8'],
+                nocturnal: ['#0f172a', '#1e1b4b', '#6366f1', '#312e81', '#a5b4fc'],
+                editorial: ['#1f1916', '#33241d', '#fb923c', '#9a3412', '#fed7aa']
+            };
+
+            const finalizeCreate = async (coverImageUrl = null) => {
+                try {
+                    createSubGalleryBtn.disabled = true;
+                    createSubGalleryBtn.textContent = 'Creating...';
+
+                    const newSg = {
+                        id,
+                        title,
+                        description,
+                        coverPalette: motifPalettes[motif] || motifPalettes.island,
+                        motif,
+                        ...(coverImageUrl ? { coverImageUrl } : {})
+                    };
+
+                    subGalleries.push(newSg);
+                    await saveSubGalleriesCatalogToGitHub(`Add sub-gallery: ${title}`);
+
+                    createSubGalleryForm.reset();
+                    renderSubGalleries();
+                    renderAdminSubGalleryList();
+                    showToast(`Created sub-gallery "${title}"!`);
+                } catch (err) {
+                    subGalleries = subGalleries.filter(s => s.id !== id);
+                    showToast(`Failed to create sub-gallery: ${err.message}`);
+                } finally {
+                    createSubGalleryBtn.disabled = false;
+                    createSubGalleryBtn.textContent = '+ Create Sub-Gallery';
+                }
+            };
+
+            if (coverFile) {
+                const reader = new FileReader();
+                reader.onload = async (ev) => {
+                    try {
+                        createSubGalleryBtn.disabled = true;
+                        createSubGalleryBtn.textContent = 'Uploading Cover...';
+                        const ext = (coverFile.name.split('.').pop() || 'png').toLowerCase().replace(/[^a-z0-9]/g, '');
+                        const repoCoverPath = `images/cover-${id}-${Date.now()}.${ext}`;
+                        const rawBase64 = ev.target.result.split(',')[1];
+                        await githubApiRequest(repoCoverPath, {
+                            method: 'PUT',
+                            body: JSON.stringify({
+                                message: `Upload sub-gallery cover: ${title}`,
+                                content: rawBase64,
+                                branch: githubConfig.branch || 'main'
+                            })
+                        });
+                        await finalizeCreate(repoCoverPath);
+                    } catch (err) {
+                        createSubGalleryBtn.disabled = false;
+                        createSubGalleryBtn.textContent = '+ Create Sub-Gallery';
+                        showToast(`Cover upload failed: ${err.message}`);
+                    }
+                };
+                reader.readAsDataURL(coverFile);
+            } else {
+                await finalizeCreate(null);
+            }
+        });
 
         function renderAdminArtworkList() {
             adminTotalArtworksLabel.textContent = `${artworks.length} artwork${artworks.length === 1 ? '' : 's'} in catalog`;
@@ -2385,6 +2896,8 @@
 
         tabConnectionBtn.addEventListener('click', () => switchAdminTab('connection'));
         tabManageBtn.addEventListener('click', () => switchAdminTab('manage'));
+        tabSubGalleriesBtn.addEventListener('click', () => switchAdminTab('subgalleries'));
+        tabCategoriesBtn.addEventListener('click', () => switchAdminTab('categories'));
         adminQuickUploadBtn.addEventListener('click', () => {
             closeAdminModal();
             openUploadModal();
@@ -2415,6 +2928,8 @@
 
                 localStorage.setItem(GH_STORAGE_KEY, JSON.stringify(githubConfig));
                 updateAdminUIState();
+                await loadCategoriesCatalog();
+                await loadSubGalleriesCatalog();
                 await loadArtworksCatalog();
                 if (currentSubGalleryId) renderActiveSubGalleryGrid();
                 switchAdminTab('manage');
@@ -2435,8 +2950,10 @@
                 showToast('Enter and save your GitHub credentials first.');
                 return;
             }
-            const loaded = await loadArtworksCatalog();
-            showToast(loaded ? 'Synced latest catalog from GitHub!' : 'No artworks.json in repo yet — publish an artwork to create it.');
+            const catLoaded = await loadCategoriesCatalog();
+            const sgLoaded = await loadSubGalleriesCatalog();
+            const artLoaded = await loadArtworksCatalog();
+            showToast((catLoaded || sgLoaded || artLoaded) ? 'Synced latest categories, sub-galleries & artworks from GitHub!' : 'No remote JSON files yet — create a category, sub-gallery, or artwork to initialize them.');
         });
 
         disconnectGithubBtn.addEventListener('click', () => {
@@ -2461,18 +2978,24 @@
                 showToast('Copied hello@gumthauniverse.art to clipboard!');
             } catch (err) {
                 showToast('Contact: hello@gumthauniverse.art');
+            } finally {
+                document.body.removeChild(tempInput);
             }
-            document.body.removeChild(tempInput);
         });
 
-        // Initial Boot: Sync Admin State, Load Hosted Catalog if Present, and Route Page
+        // Initial Boot: Sync Admin State, Load Hosted Catalogs if Present, and Route Page
         updateAdminUIState();
+        renderCategoryControls();
         renderSubGalleries();
-        const initialSubGalleryId = getSubGalleryIdFromURL();
-        if (initialSubGalleryId) {
-            navigateToSubGallery(initialSubGalleryId, false);
-        }
-        loadArtworksCatalog();
+        (async () => {
+            await loadCategoriesCatalog();
+            await loadSubGalleriesCatalog();
+            await loadArtworksCatalog();
+            const initialSubGalleryId = getSubGalleryIdFromURL();
+            if (initialSubGalleryId) {
+                navigateToSubGallery(initialSubGalleryId, false);
+            }
+        })();
 
         // Auto-open Admin Modal if visited with ?admin=true
         if (new URLSearchParams(window.location.search).get('admin') === 'true') {
