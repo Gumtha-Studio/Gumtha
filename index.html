@@ -1065,11 +1065,11 @@
                     <span class="admin-dot"></span>
                     <span>Admin</span>
                 </button>
-                <button id="openUploadModalBtn" class="btn-primary" type="button">
+                <button id="openUploadModalBtn" class="btn-primary hidden" type="button">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path>
                     </svg>
-                    <span id="primaryActionLabel">Test Artwork</span>
+                    <span id="primaryActionLabel">Publish Artwork</span>
                 </button>
             </nav>
         </div>
@@ -1853,15 +1853,14 @@
         function updateAdminUIState() {
             const loggedIn = isAdminAuthenticated();
             adminNavStatusBtn.classList.toggle('hidden', !loggedIn);
+            openUploadModalBtn.classList.toggle('hidden', !loggedIn);
             disconnectGithubBtn.classList.toggle('hidden', !loggedIn);
             footerAdminLabel.textContent = loggedIn ? 'Admin Active' : 'Admin';
-            primaryActionLabel.textContent = loggedIn ? 'Publish Artwork' : 'Test Artwork';
-            uploadModalEyebrow.textContent = loggedIn ? 'GitHub Live Publish' : 'Local Preview';
-            uploadModalTitle.textContent = loggedIn ? 'Publish Artwork to GitHub' : 'Test Your Artwork';
-            uploadModeHint.textContent = loggedIn
-                ? 'Uploads image to images/ and updates artworks.json in your GitHub repository'
-                : 'Renders locally in your browser — connect Admin in footer to publish permanently';
-            submitUploadBtn.textContent = loggedIn ? 'Publish to Site' : 'Add to Sub-Gallery';
+            primaryActionLabel.textContent = 'Publish Artwork';
+            uploadModalEyebrow.textContent = 'GitHub Live Publish';
+            uploadModalTitle.textContent = 'Publish Artwork to GitHub';
+            uploadModeHint.textContent = 'Uploads image to images/ and updates artworks.json in your GitHub repository';
+            submitUploadBtn.textContent = 'Publish to Site';
 
             if (loggedIn) {
                 document.getElementById('ghOwnerInput').value = githubConfig.owner;
