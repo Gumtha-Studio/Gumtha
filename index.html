@@ -1830,7 +1830,21 @@
             const filterContainer = document.getElementById('filterControls');
             if (!filterContainer) return;
 
-            const allCats = ['All', ...categories];
+            // Only show categories that actually have artworks uploaded inside the active gallery
+            const galleryArtworks = currentSubGalleryId
+                ? artworks.filter(a => a.subGallery === currentSubGalleryId)
+                : artworks;
+            const usedCategoriesSet = new Set(galleryArtworks.map(a => a.category).filter(Boolean));
+            const activeGalleryCategories = categories.filter(cat => usedCategoriesSet.has(cat));
+
+            // Include any custom artwork category not yet in the global list
+            usedCategoriesSet.forEach(cat => {
+                if (!activeGalleryCategories.includes(cat)) {
+                    activeGalleryCategories.push(cat);
+                }
+            });
+
+            const allCats = ['All', ...activeGalleryCategories];
             if (!allCats.includes(currentFilter)) {
                 currentFilter = 'All';
             }
@@ -2068,6 +2082,7 @@
                     await syncArtworksJsonToGithub(updatedArtworks, `Delete artwork: ${target.title}`);
                     artworks = updatedArtworks;
                     if (fromLightbox) closeLightbox();
+                    renderCategoryControls();
                     renderSubGalleryArtworks();
                     renderSubGalleries();
                     renderAdminArtworksList();
@@ -2078,6 +2093,7 @@
             } else {
                 artworks = updatedArtworks;
                 if (fromLightbox) closeLightbox();
+                renderCategoryControls();
                 renderSubGalleryArtworks();
                 renderSubGalleries();
                 renderAdminArtworksList();
