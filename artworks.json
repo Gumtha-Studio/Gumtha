@@ -38,15 +38,5 @@
     "notes": "Ancient relic discovered beneath bioluminescent tide pools.",
     "customImageUrl": null,
     "svgType": "ruins"
-  },
-  {
-    "id": 6,
-    "subGallery": "vector-editorial",
-    "title": "Botanical Clockwork",
-    "category": "Vector Studies",
-    "tools": "Adobe Illustrator • Vector Art",
-    "notes": "Precision geometric linework paired with organic flora motifs for editorial print.",
-    "customImageUrl": null,
-    "svgType": "editorial"
   }
 ]
