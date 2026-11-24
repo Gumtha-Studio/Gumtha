@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gumtha Studios </title>
+    <title>Gumtha Studios — Digital Illustration Portfolio</title>
     <style>
         /* Self-Contained Black & Metallic Gold Theme — Zero External Dependencies */
         :root {
@@ -103,7 +103,7 @@
             border-radius: 10px;
             object-fit: cover;
             border: 1px solid rgba(243, 217, 139, 0.35);
-            background: #ffffff;
+            background: #070708;
             box-shadow: 0 4px 16px rgba(212, 175, 55, 0.25);
         }
 
@@ -112,7 +112,7 @@
             height: 42px;
             aspect-ratio: 1 / 1;
             border-radius: 10px;
-            background: #ffffff;
+            background: #070708;
             border: 1px solid rgba(243, 217, 139, 0.35);
             box-shadow: 0 4px 16px rgba(212, 175, 55, 0.25);
             flex-shrink: 0;
@@ -1074,7 +1074,7 @@
                                 <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#000000" flood-opacity="0.28"/>
                             </filter>
                         </defs>
-                        <rect width="110" height="110" fill="#ffffff"/>
+                        <rect width="110" height="110" fill="#070708"/>
                         <!-- Gold Stylized A -->
                         <path d="M12 88 L38 28 L45 34 L25 88 Z" fill="url(#agGoldGrad)" filter="url(#agDropShadow)"/>
                         <!-- Gold Stylized G -->
@@ -1105,20 +1105,20 @@
     <main class="container">
         <!-- HOME PAGE VIEW (Default Route) -->
         <div id="homePageView" class="page-transition-in">
-            <!-- Sub-Galleries Showcase Section -->
-            <section id="sub-galleries" class="gallery-hero" aria-label="Sub-Galleries Overview">
+            <!-- Galleries Showcase Section -->
+            <section id="sub-galleries" class="gallery-hero" aria-label="Galleries Overview">
                 <div class="hero-top-row">
                     <div>
-                        <span class="eyebrow">Collections &amp; Series</span>
+                        <span class="eyebrow">Curated Worlds &amp; Series</span>
                         <h1 class="section-title">Galleries &amp; Collections</h1>
                     </div>
                     <p class="section-subtitle">
-                        Select a series below to open its dedicated gallery page of Gumtha Studios.
+                        Select a visual series below to open its dedicated gallery page featuring standalone worlds, character lore, and atmospheric digital illustrations across Gumtha Studios.
                     </p>
                 </div>
 
                 <div id="subGalleriesGrid" class="subgalleries-grid">
-                    <!-- Sub-Gallery Cards injected dynamically -->
+                    <!-- Gallery Cards injected dynamically -->
                 </div>
             </section>
 
@@ -1129,7 +1129,7 @@
                         <span class="eyebrow">The Artist</span>
                         <h2>About Gumtha Studios</h2>
                         <p>
-                            The World og Fantasy Edits.
+                            Gumtha Studios is an independent digital illustration studio exploring atmospheric worldbuilding, expressive character design, and nocturnal color storytelling. Every piece is crafted from initial thumbnail sketches to final lighting passes.
                         </p>
                         <div class="tag-row">
                             <span class="skill-tag">Procreate</span>
@@ -1142,10 +1142,10 @@
 
                 <article id="contact" class="info-card">
                     <div>
-                        <span class="eyebrow"></span>
+                        <span class="eyebrow">Inquiries &amp; Commissions</span>
                         <h2>Get in Touch</h2>
                         <p>
-                            Available for Wallpapers, editorial illustration, character concept sheets, and album artwork. Reach out directly to discuss timelines and project scope.
+                            Available for book covers, editorial illustration, character concept sheets, and album artwork. Reach out directly to discuss timelines and project scope.
                         </p>
                     </div>
                     <div class="contact-actions">
@@ -1162,8 +1162,8 @@
             </section>
         </div>
 
-        <!-- STANDALONE SUB-GALLERY PAGE VIEW (Dedicated Route: ?gallery=<id> / #/gallery/<id>) -->
-        <section id="subGalleryPageView" class="subgallery-page-section hidden" aria-label="Dedicated Sub-Gallery Page">
+        <!-- STANDALONE GALLERY PAGE VIEW (Dedicated Route: ?gallery=<id> / #/gallery/<id>) -->
+        <section id="subGalleryPageView" class="subgallery-page-section hidden" aria-label="Dedicated Gallery Page">
             <nav class="subgallery-breadcrumb" aria-label="Breadcrumb">
                 <button type="button" id="breadcrumbHomeBtn" class="breadcrumb-link">Home</button>
                 <span>/</span>
@@ -1176,7 +1176,7 @@
                 <div>
                     <span id="activeSubGalleryTag" class="eyebrow">Gallery</span>
                     <h1 id="activeSubGalleryTitle" class="section-title">Gallery Title</h1>
-                    <p id="activeSubGalleryDesc" class="section-subtitle" style="margin-top: 8px;">Sub-gallery description.</p>
+                    <p id="activeSubGalleryDesc" class="section-subtitle" style="margin-top: 8px;">Gallery description.</p>
                 </div>
                 <button type="button" id="backToSubGalleriesBtn" class="btn-back">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
@@ -1186,12 +1186,12 @@
                 </button>
             </div>
 
-            <!-- Category Filter Pills Inside Dedicated Sub-Gallery Page -->
-            <div class="filter-bar" id="filterControls" role="tablist" aria-label="Filter illustrations within sub-gallery">
+            <!-- Category Filter Pills Inside Dedicated Gallery Page -->
+            <div class="filter-bar" id="filterControls" role="tablist" aria-label="Filter illustrations within gallery">
                 <!-- Category filter buttons rendered dynamically -->
             </div>
 
-            <!-- Full Masonry Grid for Selected Sub-Gallery Page -->
+            <!-- Full Masonry Grid for Selected Gallery Page -->
             <div id="galleryGrid" class="masonry-grid">
                 <!-- Populated dynamically via JavaScript -->
             </div>
@@ -1287,7 +1287,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label" for="artSubGallerySelect">Target Sub-Gallery</label>
+                    <label class="form-label" for="artSubGallerySelect">Target Gallery</label>
                     <select id="artSubGallerySelect" class="form-control"></select>
                 </div>
 
@@ -1308,7 +1308,7 @@
 
                 <div style="display: flex; justify-content: flex-end; gap: 10px;">
                     <button type="button" id="cancelUploadBtn" class="btn-secondary">Cancel</button>
-                    <button type="submit" id="submitUploadBtn" class="btn-primary">Add to Sub-Gallery</button>
+                    <button type="submit" id="submitUploadBtn" class="btn-primary">Add to Gallery</button>
                 </div>
             </form>
         </div>
@@ -1344,7 +1344,20 @@
             <!-- Tab 1: GitHub Connection -->
             <div id="adminTabConnection">
                 <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 16px;">
-                    Connect your GitHub repository using a Personal Access Token (with <strong>Contents: Read &amp; Write</strong> permission). When you publish or delete artworks, sub-galleries, or categories, this panel commits changes directly to your repo so all visitors see them permanently.
+                    Connect your GitHub repository using a Personal Access Token (with <strong>Contents: Read &amp; Write</strong> permission). When you publish or delete artworks, galleries, or categories, this panel commits changes directly to your repo so all visitors see them permanently.
+                </p>
+
+            <div class="admin-tabs">
+                <button type="button" class="admin-tab-btn active" data-admin-tab="connection">GitHub Connection</button>
+                <button type="button" class="admin-tab-btn" data-admin-tab="subgalleries">Galleries</button>
+                <button type="button" class="admin-tab-btn" data-admin-tab="categories">Categories</button>
+                <button type="button" class="admin-tab-btn" data-admin-tab="artworks">Manage Artworks</button>
+            </div>
+
+            <!-- Tab 1: GitHub Connection -->
+            <div id="adminTabConnection">
+                <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 16px;">
+                    Connect your GitHub repository using a Personal Access Token (with <strong>Contents: Read &amp; Write</strong> permission). When you publish or delete artworks, galleries, or categories, this panel commits changes directly to your repo so all visitors see them permanently.
                 </p>
 
                 <form id="adminConnectForm">
@@ -1387,13 +1400,13 @@
                 </div>
             </div>
 
-            <!-- Tab 2: Manage Sub-Galleries -->
+            <!-- Tab 2: Manage Galleries -->
             <div id="adminTabSubGalleries" class="hidden">
                 <form id="createSubGalleryForm" style="background: rgba(212, 175, 55, 0.04); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 16px; margin-bottom: 20px;">
-                    <h4 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 12px;">Create New Sub-Gallery</h4>
+                    <h4 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 12px;">Create New Gallery</h4>
 
                     <div class="form-group">
-                        <label class="form-label" for="newSgTitleInput">Sub-Gallery Title</label>
+                        <label class="form-label" for="newSgTitleInput">Gallery Title</label>
                         <input type="text" id="newSgTitleInput" class="form-control" placeholder="e.g., Celestial Architecture" required>
                     </div>
 
@@ -1420,11 +1433,11 @@
                     </div>
 
                     <div style="display: flex; justify-content: flex-end;">
-                        <button type="submit" id="createSgSubmitBtn" class="btn-primary">+ Create Sub-Gallery</button>
+                        <button type="submit" id="createSgSubmitBtn" class="btn-primary">+ Create Gallery</button>
                     </div>
                 </form>
 
-                <h4 style="font-size: 0.92rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 10px;">Existing Sub-Galleries</h4>
+                <h4 style="font-size: 0.92rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 10px;">Existing Galleries</h4>
                 <div id="adminSubGalleriesList"></div>
             </div>
 
@@ -1445,7 +1458,7 @@
             <!-- Tab 4: Manage Artworks -->
             <div id="adminTabArtworks" class="hidden">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-                    <p style="font-size: 0.85rem; color: var(--text-secondary);">Manage published illustrations across all sub-galleries.</p>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary);">Manage published illustrations across all galleries.</p>
                     <button type="button" id="adminTabAddArtBtn" class="btn-primary" style="padding: 8px 16px; font-size: 0.83rem;">+ Publish Artwork</button>
                 </div>
                 <div id="adminArtworksList"></div>
@@ -1848,7 +1861,7 @@
             grid.innerHTML = subGalleries.map(sg => {
                 const count = artworks.filter(a => a.subGallery === sg.id).length;
                 return `
-                    <article class="subgallery-card" data-sg-id="${sg.id}" tabindex="0" role="button" aria-label="Open ${sg.title} sub-gallery">
+                    <article class="subgallery-card" data-sg-id="${sg.id}" tabindex="0" role="button" aria-label="Open ${sg.title} gallery">
                         <div class="subgallery-cover">
                             ${getSubGalleryCoverHTML(sg)}
                             <span class="subgallery-count-badge">${count} ${count === 1 ? 'Work' : 'Works'}</span>
@@ -1859,7 +1872,7 @@
                                 <p class="subgallery-desc">${sg.description}</p>
                             </div>
                             <span class="subgallery-cta">
-                                <span>Explore Sub-Gallery</span>
+                                <span>Explore Gallery</span>
                                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
                                     <path d="M5 12h14M12 5l7 7-7 7"/>
                                 </svg>
@@ -1930,7 +1943,7 @@
             renderCategoryControls();
 
             document.getElementById('breadcrumbCurrentTitle').textContent = sg.title;
-            document.getElementById('activeSubGalleryTag').textContent = 'Sub-Gallery Collection';
+            document.getElementById('activeSubGalleryTag').textContent = 'Gallery Collection';
             document.getElementById('activeSubGalleryTitle').textContent = sg.title;
             document.getElementById('activeSubGalleryDesc').textContent = sg.description;
             document.title = `${sg.title} — Gumtha Studios`;
@@ -2110,7 +2123,7 @@
                 if (logoutBtn) logoutBtn.classList.add('hidden');
                 if (openPubBtn) openPubBtn.classList.add('hidden');
                 if (uploadHint) uploadHint.textContent = 'Local preview mode — connect GitHub Admin in footer to save permanently.';
-                if (submitUploadBtn) submitUploadBtn.textContent = 'Add to Sub-Gallery';
+                if (submitUploadBtn) submitUploadBtn.textContent = 'Add to Gallery';
             }
 
             if (currentSubGalleryId) {
@@ -2160,22 +2173,22 @@
                 btn.addEventListener('click', async () => {
                     const sgId = btn.dataset.delSg;
                     if (subGalleries.length <= 1) {
-                        showToast('At least one sub-gallery must remain.');
+                        showToast('At least one gallery must remain.');
                         return;
                     }
                     const updatedSg = subGalleries.filter(s => s.id !== sgId);
                     if (adminState.isConnected) {
                         try {
-                            await syncSubGalleriesJsonToGithub(updatedSg, `Delete sub-gallery: ${sgId}`);
+                            await syncSubGalleriesJsonToGithub(updatedSg, `Delete gallery: ${sgId}`);
                             subGalleries = updatedSg;
-                            showToast('Sub-gallery deleted & synced to GitHub!');
+                            showToast('Gallery deleted & synced to GitHub!');
                         } catch (err) {
                             showToast(`GitHub sync error: ${err.message}`);
                             return;
                         }
                     } else {
                         subGalleries = updatedSg;
-                        showToast('Sub-gallery removed locally.');
+                        showToast('Gallery removed locally.');
                     }
                     populateDynamicSelects();
                     renderSubGalleries();
@@ -2431,14 +2444,14 @@
                         { id, title, description, coverSvgType, customCoverUrl }
                     ];
                     if (adminState.isConnected) {
-                        await syncSubGalleriesJsonToGithub(updatedSg, `Add sub-gallery: ${title}`);
+                        await syncSubGalleriesJsonToGithub(updatedSg, `Add gallery: ${title}`);
                     }
                     subGalleries = updatedSg;
                     populateDynamicSelects();
                     renderSubGalleries();
                     renderAdminSubGalleriesList();
                     document.getElementById('createSubGalleryForm').reset();
-                    showToast(`Created sub-gallery "${title}"!`);
+                    showToast(`Created gallery "${title}"!`);
                 };
 
                 try {
@@ -2470,12 +2483,12 @@
                     } else {
                         await finalizeCreate(null);
                         submitBtn.disabled = false;
-                        submitBtn.textContent = '+ Create Sub-Gallery';
+                        submitBtn.textContent = '+ Create Gallery';
                     }
                 } catch (err) {
                     showToast(`Failed: ${err.message}`);
                     submitBtn.disabled = false;
-                    submitBtn.textContent = '+ Create Sub-Gallery';
+                    submitBtn.textContent = '+ Create Gallery';
                 }
             });
 
