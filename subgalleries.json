@@ -1,0 +1,23 @@
+[
+  {
+    "id": "characters-lore",
+    "title": "Characters",
+    "description": "Expressive character portraits, traveler archetypes, and narrative costume studies set across misty kingdoms.",
+    "coverSvgType": "character",
+    "customCoverUrl": null
+  },
+  {
+    "id": "nocturnal-environments",
+    "title": "Nocturnal Environments",
+    "description": "Atmospheric twilight sanctuaries, sunken monoliths, and luminous architecture rendered in deep nocturnal palettes.",
+    "coverSvgType": "sanctuary",
+    "customCoverUrl": null
+  },
+  {
+    "id": "vector-editorial",
+    "title": "Vector & Editorial Studies",
+    "description": "Crisp geometric compositions, botanical clockwork motifs, and stylized cover art studies.",
+    "coverSvgType": "editorial",
+    "customCoverUrl": null
+  }
+]
