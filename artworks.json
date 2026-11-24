@@ -10,16 +10,6 @@
     "svgType": null
   },
   {
-    "id": 1,
-    "subGallery": "nocturnal-environments",
-    "title": "Tidal Sanctuary at Dusk",
-    "category": "Environments",
-    "tools": "Procreate • Digital Paint",
-    "notes": "Atmospheric lighting study exploring warm golden reflections across obsidian waters.",
-    "customImageUrl": null,
-    "svgType": "sanctuary"
-  },
-  {
     "id": 3,
     "subGallery": "nocturnal-environments",
     "title": "Neon Observatory",
@@ -38,5 +28,15 @@
     "notes": "Ancient relic discovered beneath bioluminescent tide pools.",
     "customImageUrl": null,
     "svgType": "ruins"
+  },
+  {
+    "id": 6,
+    "subGallery": "vector-editorial",
+    "title": "Botanical Clockwork",
+    "category": "Vector Studies",
+    "tools": "Adobe Illustrator • Vector Art",
+    "notes": "Precision geometric linework paired with organic flora motifs for editorial print.",
+    "customImageUrl": null,
+    "svgType": "editorial"
   }
 ]
