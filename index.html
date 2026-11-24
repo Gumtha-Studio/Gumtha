@@ -1390,7 +1390,11 @@
             <!-- Tab 2: Manage Galleries -->
             <div id="adminTabSubGalleries" class="hidden">
                 <form id="createSubGalleryForm" style="background: rgba(212, 175, 55, 0.04); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 16px; margin-bottom: 20px;">
-                    <h4 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 12px;">Create New Gallery</h4>
+                    <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px;">
+                        <h4 id="sgFormHeading" style="font-size: 0.95rem; font-weight: 600;">Create New Gallery</h4>
+                        <button type="button" id="cancelEditSgBtn" class="btn-secondary hidden" style="padding: 5px 12px; font-size: 0.78rem;">Cancel Edit</button>
+                    </div>
+                    <input type="hidden" id="editingSgIdInput" value="">
 
                     <div class="form-group">
                         <label class="form-label" for="newSgTitleInput">Gallery Title</label>
@@ -1417,9 +1421,13 @@
                     <div class="form-group">
                         <label class="form-label" for="newSgCoverFileInput">Custom Cover Image (Optional — Overrides Default Style)</label>
                         <input type="file" id="newSgCoverFileInput" accept="image/*" class="form-control">
+                        <div id="existingCoverActions" class="hidden" style="margin-top: 8px; display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+                            <span style="font-size: 0.78rem; color: var(--text-secondary);">Currently using a custom cover image.</span>
+                            <button type="button" id="clearCustomCoverBtn" class="btn-danger" style="padding: 4px 10px; font-size: 0.75rem;">Remove Custom Cover</button>
+                        </div>
                     </div>
 
-                    <div style="display: flex; justify-content: flex-end;">
+                    <div style="display: flex; justify-content: flex-end; gap: 10px;">
                         <button type="submit" id="createSgSubmitBtn" class="btn-primary">+ Create Gallery</button>
                     </div>
                 </form>
@@ -2148,13 +2156,24 @@
             if (!container) return;
             container.innerHTML = subGalleries.map(sg => `
                 <div class="admin-item-row">
-                    <div>
+                    <div style="flex: 1; min-width: 0;">
                         <strong style="font-size: 0.92rem; color: var(--text-primary);">${sg.title}</strong>
                         <p style="font-size: 0.8rem; color: var(--text-secondary);">${sg.description}</p>
                     </div>
-                    <button type="button" class="btn-danger" data-del-sg="${sg.id}">Delete</button>
+                    <div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0;">
+                        <button type="button" class="btn-secondary" style="padding: 7px 14px; font-size: 0.82rem;" data-edit-sg="${sg.id}">Edit</button>
+                        <button type="button" class="btn-danger" data-del-sg="${sg.id}">Delete</button>
+                    </div>
                 </div>
             `).join('');
+
+            container.querySelectorAll('[data-edit-sg]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const sg = subGalleries.find(s => s.id === btn.dataset.editSg);
+                    if (!sg) return;
+                    startEditingSubGallery(sg);
+                });
+            });
 
             container.querySelectorAll('[data-del-sg]').forEach(btn => {
                 btn.addEventListener('click', async () => {
@@ -2177,6 +2196,9 @@
                         subGalleries = updatedSg;
                         showToast('Gallery removed locally.');
                     }
+                    if (document.getElementById('editingSgIdInput').value === sgId) {
+                        resetSubGalleryForm();
+                    }
                     populateDynamicSelects();
                     renderSubGalleries();
                     renderAdminSubGalleriesList();
@@ -2184,36 +2206,69 @@
             });
         }
 
+        let clearExistingCustomCover = false;
+
+        function startEditingSubGallery(sg) {
+            clearExistingCustomCover = false;
+            document.getElementById('editingSgIdInput').value = sg.id;
+            document.getElementById('sgFormHeading').textContent = `Edit Gallery: ${sg.title}`;
+            document.getElementById('newSgTitleInput').value = sg.title;
+            document.getElementById('newSgDescInput').value = sg.description;
+            document.getElementById('newSgCoverStyleSelect').value = sg.coverSvgType || 'sanctuary';
+            document.getElementById('newSgCoverFileInput').value = '';
+            document.getElementById('cancelEditSgBtn').classList.remove('hidden');
+            document.getElementById('createSgSubmitBtn').textContent = 'Save Changes';
+
+            const existingCoverRow = document.getElementById('existingCoverActions');
+            if (sg.customCoverUrl) {
+                existingCoverRow.classList.remove('hidden');
+            } else {
+                existingCoverRow.classList.add('hidden');
+            }
+
+            document.getElementById('createSubGalleryForm').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function resetSubGalleryForm() {
+            clearExistingCustomCover = false;
+            document.getElementById('createSubGalleryForm').reset();
+            document.getElementById('editingSgIdInput').value = '';
+            document.getElementById('sgFormHeading').textContent = 'Create New Gallery';
+            document.getElementById('cancelEditSgBtn').classList.add('hidden');
+            document.getElementById('existingCoverActions').classList.add('hidden');
+            document.getElementById('createSgSubmitBtn').textContent = '+ Create Gallery';
+        }
+
         function renderAdminCategoriesList() {
             const container = document.getElementById('adminCategoriesList');
             if (!container) return;
             container.innerHTML = categories.map(cat => `
                 <div class="admin-item-row">
-                    <span style="font-size: 0.9rem; font-weight: 500;">${cat}</span>
-                    <button type="button" class="btn-danger" data-del-cat="${cat}">Remove</button>
+                    <strong style="font-size: 0.92rem; color: var(--text-primary);">${cat}</strong>
+                    <button type="button" class="btn-danger" data-del-cat="${cat}">Delete</button>
                 </div>
             `).join('');
 
             container.querySelectorAll('[data-del-cat]').forEach(btn => {
                 btn.addEventListener('click', async () => {
-                    const targetCat = btn.dataset.delCat;
+                    const catName = btn.dataset.delCat;
                     if (categories.length <= 1) {
-                        showToast('Keep at least one active category.');
+                        showToast('At least one category must remain.');
                         return;
                     }
-                    const updatedCats = categories.filter(c => c !== targetCat);
+                    const updatedCats = categories.filter(c => c !== catName);
                     if (adminState.isConnected) {
                         try {
-                            await syncCategoriesJsonToGithub(updatedCats, `Remove category: ${targetCat}`);
+                            await syncCategoriesJsonToGithub(updatedCats, `Delete category: ${catName}`);
                             categories = updatedCats;
-                            showToast(`Removed category "${targetCat}" & synced!`);
+                            showToast(`Category "${catName}" deleted & synced!`);
                         } catch (err) {
                             showToast(`GitHub sync error: ${err.message}`);
                             return;
                         }
                     } else {
                         categories = updatedCats;
-                        showToast(`Removed category "${targetCat}".`);
+                        showToast(`Category "${catName}" removed locally.`);
                     }
                     populateDynamicSelects();
                     renderCategoryControls();
@@ -2226,18 +2281,18 @@
             const container = document.getElementById('adminArtworksList');
             if (!container) return;
             if (artworks.length === 0) {
-                container.innerHTML = `<p style="font-size: 0.85rem; color: var(--text-secondary);">No artworks found.</p>`;
+                container.innerHTML = `<p style="font-size: 0.85rem; color: var(--text-muted);">No artworks found.</p>`;
                 return;
             }
             container.innerHTML = artworks.map(art => {
                 const sg = subGalleries.find(s => s.id === art.subGallery);
                 return `
                     <div class="admin-item-row">
-                        <div>
-                            <strong style="font-size: 0.9rem;">${art.title}</strong>
-                            <div style="font-size: 0.78rem; color: var(--text-secondary);">
-                                ${sg ? sg.title : art.subGallery} • ${art.category}
-                            </div>
+                        <div style="flex: 1; min-width: 0;">
+                            <strong style="font-size: 0.92rem; color: var(--text-primary);">${art.title}</strong>
+                            <p style="font-size: 0.78rem; color: var(--text-secondary);">
+                                ${sg ? sg.title : art.subGallery} &bull; ${art.category}
+                            </p>
                         </div>
                         <button type="button" class="btn-danger" data-admin-del-art="${art.id}">Delete</button>
                     </div>
@@ -2245,14 +2300,14 @@
             }).join('');
 
             container.querySelectorAll('[data-admin-del-art]').forEach(btn => {
-                btn.addEventListener('click', () => handleDeleteArtwork(Number(btn.dataset.adminDelArt)));
+                btn.addEventListener('click', () => {
+                    handleDeleteArtwork(Number(btn.dataset.adminDelArt));
+                });
             });
         }
 
         function initGumthaStudios() {
-            populateDynamicSelects();
-
-            // Navigation & Breadcrumb Routing
+            // Navigation Links
             document.getElementById('brandHomeLink').addEventListener('click', (e) => {
                 e.preventDefault();
                 navigateToSubGallery(null);
@@ -2408,9 +2463,18 @@
                 reader.readAsDataURL(file);
             });
 
-            // Create New Sub-Gallery
+            // Create or Update Gallery
+            document.getElementById('cancelEditSgBtn').addEventListener('click', resetSubGalleryForm);
+            document.getElementById('clearCustomCoverBtn').addEventListener('click', () => {
+                clearExistingCustomCover = true;
+                document.getElementById('existingCoverActions').classList.add('hidden');
+                showToast('Custom cover marked for removal — click Save Changes to apply.');
+            });
+
             document.getElementById('createSubGalleryForm').addEventListener('submit', async (e) => {
                 e.preventDefault();
+                const editingId = document.getElementById('editingSgIdInput').value.trim();
+                const isEditing = Boolean(editingId);
                 const title = document.getElementById('newSgTitleInput').value.trim();
                 const description = document.getElementById('newSgDescInput').value.trim();
                 const coverSvgType = document.getElementById('newSgCoverStyleSelect').value;
@@ -2419,29 +2483,61 @@
 
                 if (!title) return;
                 const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || `series-${Date.now()}`;
-                const id = subGalleries.some(s => s.id === slug) ? `${slug}-${Date.now()}` : slug;
+                const id = isEditing ? editingId : (subGalleries.some(s => s.id === slug) ? `${slug}-${Date.now()}` : slug);
 
                 const submitBtn = document.getElementById('createSgSubmitBtn');
                 submitBtn.disabled = true;
-                submitBtn.textContent = 'Saving...';
+                submitBtn.textContent = isEditing ? 'Updating...' : 'Saving...';
 
-                const finalizeCreate = async (customCoverUrl) => {
-                    const updatedSg = [
-                        ...subGalleries,
-                        { id, title, description, coverSvgType, customCoverUrl }
-                    ];
-                    if (adminState.isConnected) {
-                        await syncSubGalleriesJsonToGithub(updatedSg, `Add gallery: ${title}`);
+                const finalizeSave = async (resolvedCoverUrl) => {
+                    let updatedSg;
+                    if (isEditing) {
+                        updatedSg = subGalleries.map(sg => {
+                            if (sg.id !== editingId) return sg;
+                            return {
+                                ...sg,
+                                title,
+                                description,
+                                coverSvgType,
+                                customCoverUrl: resolvedCoverUrl
+                            };
+                        });
+                    } else {
+                        updatedSg = [
+                            ...subGalleries,
+                            { id, title, description, coverSvgType, customCoverUrl: resolvedCoverUrl }
+                        ];
                     }
+
+                    if (adminState.isConnected) {
+                        await syncSubGalleriesJsonToGithub(
+                            updatedSg,
+                            isEditing ? `Update gallery: ${title}` : `Add gallery: ${title}`
+                        );
+                    }
+
                     subGalleries = updatedSg;
                     populateDynamicSelects();
                     renderSubGalleries();
                     renderAdminSubGalleriesList();
-                    document.getElementById('createSubGalleryForm').reset();
-                    showToast(`Created gallery "${title}"!`);
+
+                    if (currentSubGalleryId === id) {
+                        document.getElementById('breadcrumbCurrentTitle').textContent = title;
+                        document.getElementById('activeSubGalleryTitle').textContent = title;
+                        document.getElementById('activeSubGalleryDesc').textContent = description;
+                        document.title = `${title} — Gumtha Studios`;
+                    }
+
+                    resetSubGalleryForm();
+                    showToast(isEditing ? `Updated gallery "${title}"!` : `Created gallery "${title}"!`);
                 };
 
                 try {
+                    const existingSg = isEditing ? subGalleries.find(s => s.id === editingId) : null;
+                    const fallbackCoverUrl = isEditing
+                        ? (clearExistingCustomCover ? null : (existingSg ? existingSg.customCoverUrl : null))
+                        : null;
+
                     if (file) {
                         const reader = new FileReader();
                         reader.onload = async (ev) => {
@@ -2450,32 +2546,32 @@
                                 let coverUrl = dataUrl;
                                 if (adminState.isConnected) {
                                     const ext = (file.name.split('.').pop() || 'png').toLowerCase();
-                                    const repoPath = `images/cover-${id}.${ext}`;
+                                    const repoPath = `images/cover-${id}-${Date.now()}.${ext}`;
                                     await githubApiRequest(`/contents/${repoPath}`, 'PUT', {
-                                        message: `Add cover for ${title}`,
+                                        message: `${isEditing ? 'Update' : 'Add'} cover for ${title}`,
                                         content: dataUrl.split(',')[1],
                                         branch: adminState.branch
                                     });
                                     coverUrl = `./${repoPath}`;
                                 }
-                                await finalizeCreate(coverUrl);
+                                await finalizeSave(coverUrl);
                             } catch (err) {
                                 showToast(`Failed: ${err.message}`);
                             } finally {
                                 submitBtn.disabled = false;
-                                submitBtn.textContent = '+ Create Sub-Gallery';
+                                submitBtn.textContent = document.getElementById('editingSgIdInput').value ? 'Save Changes' : '+ Create Gallery';
                             }
                         };
                         reader.readAsDataURL(file);
                     } else {
-                        await finalizeCreate(null);
+                        await finalizeSave(fallbackCoverUrl);
                         submitBtn.disabled = false;
-                        submitBtn.textContent = '+ Create Gallery';
+                        submitBtn.textContent = document.getElementById('editingSgIdInput').value ? 'Save Changes' : '+ Create Gallery';
                     }
                 } catch (err) {
                     showToast(`Failed: ${err.message}`);
                     submitBtn.disabled = false;
-                    submitBtn.textContent = '+ Create Gallery';
+                    submitBtn.textContent = isEditing ? 'Save Changes' : '+ Create Gallery';
                 }
             });
 
