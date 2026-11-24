@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1795500382386,
+    "subGallery": "characters-lore",
+    "title": "character 1",
+    "category": "Character Design",
+    "tools": "Procreate • Digital Paint",
+    "notes": "Digital illustration added to Gumtha Studios.",
+    "customImageUrl": "./images/1795500382386-character-1.jpeg",
+    "svgType": null
+  },
+  {
+    "id": 1,
+    "subGallery": "nocturnal-environments",
+    "title": "Tidal Sanctuary at Dusk",
+    "category": "Environments",
+    "tools": "Procreate • Digital Paint",
+    "notes": "Atmospheric lighting study exploring warm golden reflections across obsidian waters.",
+    "customImageUrl": null,
+    "svgType": "sanctuary"
+  },
+  {
+    "id": 2,
+    "subGallery": "characters-lore",
+    "title": "The Lantern Keeper",
+    "category": "Character Design",
+    "tools": "Clip Studio Paint • Character Sheet",
+    "notes": "Original character concept focusing on silhouette clarity and warm rim lighting.",
+    "customImageUrl": null,
+    "svgType": "character"
+  },
+  {
+    "id": 3,
+    "subGallery": "nocturnal-environments",
+    "title": "Neon Observatory",
+    "category": "Environments",
+    "tools": "Adobe Photoshop • Matte Painting",
+    "notes": "Architectural skyline concept blending brutalist towers with celestial dome geometry.",
+    "customImageUrl": null,
+    "svgType": "city"
+  },
+  {
+    "id": 4,
+    "subGallery": "characters-lore",
+    "title": "Aurelia — Velvet & Gold",
+    "category": "Character Design",
+    "tools": "Procreate • Portrait Study",
+    "notes": "Color harmony study balancing deep crimson shadows with metallic gold highlights.",
+    "customImageUrl": null,
+    "svgType": "portrait"
+  },
+  {
+    "id": 5,
+    "subGallery": "nocturnal-environments",
+    "title": "Sunken Monolith",
+    "category": "Concept Art",
+    "tools": "Blender + Photoshop • Overpaint",
+    "notes": "Ancient relic discovered beneath bioluminescent tide pools.",
+    "customImageUrl": null,
+    "svgType": "ruins"
+  },
+  {
+    "id": 6,
+    "subGallery": "vector-editorial",
+    "title": "Botanical Clockwork",
+    "category": "Vector Studies",
+    "tools": "Adobe Illustrator • Vector Art",
+    "notes": "Precision geometric linework paired with organic flora motifs for editorial print.",
+    "customImageUrl": null,
+    "svgType": "editorial"
+  }
+]
