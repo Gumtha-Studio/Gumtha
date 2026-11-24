@@ -20,16 +20,6 @@
     "svgType": "sanctuary"
   },
   {
-    "id": 2,
-    "subGallery": "characters-lore",
-    "title": "The Lantern Keeper",
-    "category": "Character Design",
-    "tools": "Clip Studio Paint • Character Sheet",
-    "notes": "Original character concept focusing on silhouette clarity and warm rim lighting.",
-    "customImageUrl": null,
-    "svgType": "character"
-  },
-  {
     "id": 3,
     "subGallery": "nocturnal-environments",
     "title": "Neon Observatory",
