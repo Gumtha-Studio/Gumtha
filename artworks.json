@@ -318,15 +318,5 @@
     "notes": "Digital illustration added to Gumtha Studios.",
     "customImageUrl": "./images/1795598307952-1a55908e-e4d0-4d49-9e5f-ae026706c957.jpg",
     "svgType": null
-  },
-  {
-    "id": 3,
-    "subGallery": "nocturnal-environments",
-    "title": "Neon Observatory",
-    "category": "Environments",
-    "tools": "Adobe Photoshop • Matte Painting",
-    "notes": "Architectural skyline concept blending brutalist towers with celestial dome geometry.",
-    "customImageUrl": null,
-    "svgType": "city"
   }
 ]
