@@ -1,5 +1,15 @@
 [
   {
+    "id": 1795598307985,
+    "subGallery": "avengers",
+    "title": "Loki (Rashmika Mandana)",
+    "category": "Avengers",
+    "tools": "Procreate • Digital Paint",
+    "notes": "Digital illustration added to Gumtha Studios.",
+    "customImageUrl": "./images/1795598307985-loki-rashmika-mandana.jpg",
+    "svgType": null
+  },
+  {
     "id": 1795598307983,
     "subGallery": "avengers",
     "title": "ECECA380 4282 4260 86BF 1F4DADF1B920",
@@ -318,15 +328,5 @@
     "notes": "Architectural skyline concept blending brutalist towers with celestial dome geometry.",
     "customImageUrl": null,
     "svgType": "city"
-  },
-  {
-    "id": 5,
-    "subGallery": "nocturnal-environments",
-    "title": "Sunken Monolith",
-    "category": "Concept Art",
-    "tools": "Blender + Photoshop • Overpaint",
-    "notes": "Ancient relic discovered beneath bioluminescent tide pools.",
-    "customImageUrl": null,
-    "svgType": "ruins"
   }
 ]
