@@ -1178,12 +1178,28 @@
                     <h1 id="activeSubGalleryTitle" class="section-title">Gallery Title</h1>
                     <p id="activeSubGalleryDesc" class="section-subtitle" style="margin-top: 8px;">Gallery description.</p>
                 </div>
-                <button type="button" id="backToSubGalleriesBtn" class="btn-back">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                        <path d="M19 12H5M12 19l-7-7 7-7"/>
-                    </svg>
-                    <span>Back to Home</span>
-                </button>
+                <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px;">
+                    <button type="button" id="addChildGalleryBtn" class="btn-upload-trigger hidden">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                            <path d="M12 5v14M5 12h14"/>
+                        </svg>
+                        <span>+ Add Sub-Gallery</span>
+                    </button>
+                    <button type="button" id="backToSubGalleriesBtn" class="btn-back">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                            <path d="M19 12H5M12 19l-7-7 7-7"/>
+                        </svg>
+                        <span id="backBtnLabel">Back to Home</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Nested Sub-Galleries inside this Gallery -->
+            <div id="nestedSubGalleriesSection" class="hidden" style="margin-bottom: 34px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+                    <span class="eyebrow" style="margin-bottom: 0;">Sub-Galleries in this Collection</span>
+                </div>
+                <div id="nestedSubGalleriesGrid" class="subgalleries-grid"></div>
             </div>
 
             <!-- Category Filter Pills Inside Dedicated Gallery Page -->
@@ -1402,6 +1418,13 @@
                     </div>
 
                     <div class="form-group">
+                        <label class="form-label" for="newSgParentSelect">Parent Gallery (Optional — Nest Inside Another Gallery)</label>
+                        <select id="newSgParentSelect" class="form-control">
+                            <option value="">None (Top-Level Home Gallery)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
                         <label class="form-label" for="newSgDescInput">Description</label>
                         <textarea id="newSgDescInput" rows="2" class="form-control" placeholder="Short description of this world or illustration series..." required></textarea>
                     </div>
@@ -1469,6 +1492,7 @@
         const defaultSubGalleries = [
             {
                 id: 'characters-lore',
+                parentId: null,
                 title: 'Characters & Lore',
                 description: 'Expressive character portraits, traveler archetypes, and narrative costume studies set across misty kingdoms.',
                 coverSvgType: 'character',
@@ -1476,6 +1500,7 @@
             },
             {
                 id: 'nocturnal-environments',
+                parentId: null,
                 title: 'Nocturnal Environments',
                 description: 'Atmospheric twilight sanctuaries, sunken monoliths, and luminous architecture rendered in deep nocturnal palettes.',
                 coverSvgType: 'sanctuary',
@@ -1483,6 +1508,7 @@
             },
             {
                 id: 'vector-editorial',
+                parentId: null,
                 title: 'Vector & Editorial Studies',
                 description: 'Crisp geometric compositions, botanical clockwork motifs, and stylized cover art studies.',
                 coverSvgType: 'editorial',
@@ -1814,9 +1840,30 @@
         function populateDynamicSelects() {
             const sgSelect = document.getElementById('artSubGallerySelect');
             if (sgSelect) {
-                sgSelect.innerHTML = subGalleries.map(sg => `<option value="${sg.id}">${sg.title}</option>`).join('');
+                sgSelect.innerHTML = subGalleries.map(sg => {
+                    const parent = sg.parentId ? subGalleries.find(p => p.id === sg.parentId) : null;
+                    const label = parent ? `${parent.title} → ${sg.title}` : sg.title;
+                    return `<option value="${sg.id}">${label}</option>`;
+                }).join('');
                 if (currentSubGalleryId && subGalleries.some(s => s.id === currentSubGalleryId)) {
                     sgSelect.value = currentSubGalleryId;
+                }
+            }
+
+            const editingId = document.getElementById('editingSgIdInput') ? document.getElementById('editingSgIdInput').value : '';
+            const parentSelect = document.getElementById('newSgParentSelect');
+            if (parentSelect) {
+                const currentParentVal = parentSelect.value;
+                parentSelect.innerHTML = `<option value="">None (Top-Level Home Gallery)</option>` +
+                    subGalleries
+                        .filter(sg => sg.id !== editingId)
+                        .map(sg => {
+                            const parent = sg.parentId ? subGalleries.find(p => p.id === sg.parentId) : null;
+                            const label = parent ? `${parent.title} → ${sg.title}` : sg.title;
+                            return `<option value="${sg.id}">${label}</option>`;
+                        }).join('');
+                if (currentParentVal && currentParentVal !== editingId) {
+                    parentSelect.value = currentParentVal;
                 }
             }
 
@@ -1827,34 +1874,35 @@
         }
 
         function renderCategoryControls() {
-            const filterContainer = document.getElementById('filterControls');
-            if (!filterContainer) return;
+            const filterControls = document.getElementById('filterControls');
+            if (!filterControls) return;
 
-            // Only show categories that actually have artworks uploaded inside the active gallery
-            const galleryArtworks = currentSubGalleryId
+            const seriesItems = currentSubGalleryId
                 ? artworks.filter(a => a.subGallery === currentSubGalleryId)
                 : artworks;
-            const usedCategoriesSet = new Set(galleryArtworks.map(a => a.category).filter(Boolean));
-            const activeGalleryCategories = categories.filter(cat => usedCategoriesSet.has(cat));
 
-            // Include any custom artwork category not yet in the global list
-            usedCategoriesSet.forEach(cat => {
-                if (!activeGalleryCategories.includes(cat)) {
-                    activeGalleryCategories.push(cat);
+            const activeCategories = categories.filter(cat =>
+                seriesItems.some(art => art.category === cat)
+            );
+
+            seriesItems.forEach(art => {
+                if (art.category && !activeCategories.includes(art.category)) {
+                    activeCategories.push(art.category);
                 }
             });
 
-            const allCats = ['All', ...activeGalleryCategories];
-            if (!allCats.includes(currentFilter)) {
+            if (currentFilter !== 'All' && !activeCategories.includes(currentFilter)) {
                 currentFilter = 'All';
             }
 
-            filterContainer.innerHTML = allCats.map(cat => {
-                const isActive = cat === currentFilter;
-                return `<button type="button" class="filter-pill ${isActive ? 'active' : ''}" data-category="${cat}">${cat}</button>`;
-            }).join('');
+            const filterOptions = ['All', ...activeCategories];
+            filterControls.innerHTML = filterOptions.map(cat => `
+                <button type="button" class="filter-pill ${currentFilter === cat ? 'active' : ''}" data-category="${cat}" role="tab" aria-selected="${currentFilter === cat}">
+                    ${cat}
+                </button>
+            `).join('');
 
-            filterContainer.querySelectorAll('.filter-pill').forEach(btn => {
+            filterControls.querySelectorAll('.filter-pill').forEach(btn => {
                 btn.addEventListener('click', () => {
                     currentFilter = btn.dataset.category;
                     renderCategoryControls();
@@ -1863,35 +1911,48 @@
             });
         }
 
-        function renderSubGalleries() {
-            const grid = document.getElementById('subGalleriesGrid');
-            if (!grid) return;
+        function getDescendantGalleryIds(rootId) {
+            const ids = [rootId];
+            subGalleries.forEach(sg => {
+                if (sg.parentId === rootId) {
+                    ids.push(...getDescendantGalleryIds(sg.id));
+                }
+            });
+            return ids;
+        }
 
-            grid.innerHTML = subGalleries.map(sg => {
-                const count = artworks.filter(a => a.subGallery === sg.id).length;
-                return `
-                    <article class="subgallery-card" data-sg-id="${sg.id}" tabindex="0" role="button" aria-label="Open ${sg.title} gallery">
-                        <div class="subgallery-cover">
-                            ${getSubGalleryCoverHTML(sg)}
-                            <span class="subgallery-count-badge">${count} ${count === 1 ? 'Work' : 'Works'}</span>
-                        </div>
-                        <div class="subgallery-body">
-                            <div>
-                                <h2 class="subgallery-title">${sg.title}</h2>
-                                <p class="subgallery-desc">${sg.description}</p>
-                            </div>
-                            <span class="subgallery-cta">
-                                <span>Explore Gallery</span>
-                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                                    <path d="M5 12h14M12 5l7 7-7 7"/>
-                                </svg>
-                            </span>
-                        </div>
-                    </article>
-                `;
-            }).join('');
+        function buildGalleryCardHTML(sg) {
+            const branchIds = getDescendantGalleryIds(sg.id);
+            const count = artworks.filter(a => branchIds.includes(a.subGallery)).length;
+            const childCount = subGalleries.filter(child => child.parentId === sg.id).length;
+            const badgeText = childCount > 0
+                ? `${childCount} Sub-${childCount === 1 ? 'Gallery' : 'Galleries'} • ${count} ${count === 1 ? 'Work' : 'Works'}`
+                : `${count} ${count === 1 ? 'Work' : 'Works'}`;
 
-            grid.querySelectorAll('.subgallery-card').forEach(card => {
+            return `
+                <article class="subgallery-card" data-sg-id="${sg.id}" tabindex="0" role="button" aria-label="Open ${sg.title} gallery">
+                    <div class="subgallery-cover">
+                        ${getSubGalleryCoverHTML(sg)}
+                        <span class="subgallery-count-badge">${badgeText}</span>
+                    </div>
+                    <div class="subgallery-body">
+                        <div>
+                            <h2 class="subgallery-title">${sg.title}</h2>
+                            <p class="subgallery-desc">${sg.description}</p>
+                        </div>
+                        <span class="subgallery-cta">
+                            <span>Explore Gallery</span>
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </span>
+                    </div>
+                </article>
+            `;
+        }
+
+        function bindGalleryCardEvents(container) {
+            container.querySelectorAll('.subgallery-card').forEach(card => {
                 const openSeries = () => navigateToSubGallery(card.dataset.sgId);
                 card.addEventListener('click', openSeries);
                 card.addEventListener('keydown', (e) => {
@@ -1901,6 +1962,32 @@
                     }
                 });
             });
+        }
+
+        function renderSubGalleries() {
+            const grid = document.getElementById('subGalleriesGrid');
+            if (!grid) return;
+
+            const topLevelGalleries = subGalleries.filter(sg => !sg.parentId);
+            grid.innerHTML = topLevelGalleries.map(buildGalleryCardHTML).join('');
+            bindGalleryCardEvents(grid);
+        }
+
+        function renderNestedSubGalleries(parentGalleryId) {
+            const section = document.getElementById('nestedSubGalleriesSection');
+            const grid = document.getElementById('nestedSubGalleriesGrid');
+            if (!section || !grid) return;
+
+            const children = subGalleries.filter(sg => sg.parentId === parentGalleryId);
+            if (children.length === 0) {
+                section.classList.add('hidden');
+                grid.innerHTML = '';
+                return;
+            }
+
+            section.classList.remove('hidden');
+            grid.innerHTML = children.map(buildGalleryCardHTML).join('');
+            bindGalleryCardEvents(grid);
         }
 
         function getSubGalleryIdFromURL() {
@@ -1951,11 +2038,29 @@
             currentFilter = 'All';
             renderCategoryControls();
 
+            const parentSg = sg.parentId ? subGalleries.find(p => p.id === sg.parentId) : null;
+            const breadcrumbSeriesBtn = document.getElementById('breadcrumbSeriesBtn');
+            const backBtnLabel = document.getElementById('backBtnLabel');
+            if (parentSg) {
+                breadcrumbSeriesBtn.textContent = parentSg.title;
+                breadcrumbSeriesBtn.dataset.parentId = parentSg.id;
+                backBtnLabel.textContent = `Back to ${parentSg.title}`;
+            } else {
+                breadcrumbSeriesBtn.textContent = 'Galleries';
+                breadcrumbSeriesBtn.dataset.parentId = '';
+                backBtnLabel.textContent = 'Back to Home';
+            }
+
             document.getElementById('breadcrumbCurrentTitle').textContent = sg.title;
-            document.getElementById('activeSubGalleryTag').textContent = 'Gallery Collection';
+            document.getElementById('activeSubGalleryTag').textContent = parentSg ? `${parentSg.title} • Sub-Gallery` : 'Gallery Collection';
             document.getElementById('activeSubGalleryTitle').textContent = sg.title;
             document.getElementById('activeSubGalleryDesc').textContent = sg.description;
             document.title = `${sg.title} — Gumtha Studios`;
+
+            const addChildBtn = document.getElementById('addChildGalleryBtn');
+            if (addChildBtn) {
+                addChildBtn.classList.toggle('hidden', !adminState.isConnected);
+            }
 
             homePageView.classList.add('hidden');
             subGalleryPageView.classList.remove('hidden');
@@ -1963,6 +2068,7 @@
             void subGalleryPageView.offsetWidth;
             subGalleryPageView.classList.add('page-transition-in');
 
+            renderNestedSubGalleries(subGalleryId);
             renderSubGalleryArtworks();
 
             if (pushHistory) {
@@ -2138,6 +2244,9 @@
             }
 
             if (currentSubGalleryId) {
+                const addChildBtn = document.getElementById('addChildGalleryBtn');
+                if (addChildBtn) addChildBtn.classList.toggle('hidden', !adminState.isConnected);
+                renderNestedSubGalleries(currentSubGalleryId);
                 renderSubGalleryArtworks();
             }
         }
@@ -2170,18 +2279,24 @@
         function renderAdminSubGalleriesList() {
             const container = document.getElementById('adminSubGalleriesList');
             if (!container) return;
-            container.innerHTML = subGalleries.map(sg => `
+            container.innerHTML = subGalleries.map(sg => {
+                const parentSg = sg.parentId ? subGalleries.find(p => p.id === sg.parentId) : null;
+                return `
                 <div class="admin-item-row">
                     <div style="flex: 1; min-width: 0;">
-                        <strong style="font-size: 0.92rem; color: var(--text-primary);">${sg.title}</strong>
-                        <p style="font-size: 0.8rem; color: var(--text-secondary);">${sg.description}</p>
+                        <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                            <strong style="font-size: 0.92rem; color: var(--text-primary);">${sg.title}</strong>
+                            ${parentSg ? `<span class="skill-tag" style="padding: 2px 9px; font-size: 0.72rem; color: var(--accent-bright);">Inside: ${parentSg.title}</span>` : ''}
+                        </div>
+                        <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 2px;">${sg.description}</p>
                     </div>
                     <div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0;">
                         <button type="button" class="btn-secondary" style="padding: 7px 14px; font-size: 0.82rem;" data-edit-sg="${sg.id}">Edit</button>
                         <button type="button" class="btn-danger" data-del-sg="${sg.id}">Delete</button>
                     </div>
                 </div>
-            `).join('');
+            `;
+            }).join('');
 
             container.querySelectorAll('[data-edit-sg]').forEach(btn => {
                 btn.addEventListener('click', () => {
@@ -2198,7 +2313,9 @@
                         showToast('At least one gallery must remain.');
                         return;
                     }
-                    const updatedSg = subGalleries.filter(s => s.id !== sgId);
+                    const updatedSg = subGalleries
+                        .filter(s => s.id !== sgId)
+                        .map(s => (s.parentId === sgId ? { ...s, parentId: null } : s));
                     if (adminState.isConnected) {
                         try {
                             await syncSubGalleriesJsonToGithub(updatedSg, `Delete gallery: ${sgId}`);
@@ -2217,6 +2334,7 @@
                     }
                     populateDynamicSelects();
                     renderSubGalleries();
+                    if (currentSubGalleryId) renderNestedSubGalleries(currentSubGalleryId);
                     renderAdminSubGalleriesList();
                 });
             });
@@ -2227,8 +2345,10 @@
         function startEditingSubGallery(sg) {
             clearExistingCustomCover = false;
             document.getElementById('editingSgIdInput').value = sg.id;
+            populateDynamicSelects();
             document.getElementById('sgFormHeading').textContent = `Edit Gallery: ${sg.title}`;
             document.getElementById('newSgTitleInput').value = sg.title;
+            document.getElementById('newSgParentSelect').value = sg.parentId || '';
             document.getElementById('newSgDescInput').value = sg.description;
             document.getElementById('newSgCoverStyleSelect').value = sg.coverSvgType || 'sanctuary';
             document.getElementById('newSgCoverFileInput').value = '';
@@ -2249,6 +2369,8 @@
             clearExistingCustomCover = false;
             document.getElementById('createSubGalleryForm').reset();
             document.getElementById('editingSgIdInput').value = '';
+            populateDynamicSelects();
+            document.getElementById('newSgParentSelect').value = '';
             document.getElementById('sgFormHeading').textContent = 'Create New Gallery';
             document.getElementById('cancelEditSgBtn').classList.add('hidden');
             document.getElementById('existingCoverActions').classList.add('hidden');
@@ -2341,8 +2463,22 @@
                 if (currentSubGalleryId) navigateToSubGallery(null);
             });
             document.getElementById('breadcrumbHomeBtn').addEventListener('click', () => navigateToSubGallery(null));
-            document.getElementById('breadcrumbSeriesBtn').addEventListener('click', () => navigateToSubGallery(null));
-            document.getElementById('backToSubGalleriesBtn').addEventListener('click', () => navigateToSubGallery(null));
+            document.getElementById('breadcrumbSeriesBtn').addEventListener('click', (e) => {
+                const parentId = e.currentTarget.dataset.parentId;
+                navigateToSubGallery(parentId || null);
+            });
+            document.getElementById('backToSubGalleriesBtn').addEventListener('click', () => {
+                const activeSg = subGalleries.find(s => s.id === currentSubGalleryId);
+                navigateToSubGallery(activeSg && activeSg.parentId ? activeSg.parentId : null);
+            });
+            document.getElementById('addChildGalleryBtn').addEventListener('click', () => {
+                const parentId = currentSubGalleryId;
+                openAdminModal('subgalleries');
+                resetSubGalleryForm();
+                if (parentId) {
+                    document.getElementById('newSgParentSelect').value = parentId;
+                }
+            });
 
             window.addEventListener('popstate', () => {
                 const targetId = getSubGalleryIdFromURL();
@@ -2492,6 +2628,8 @@
                 const editingId = document.getElementById('editingSgIdInput').value.trim();
                 const isEditing = Boolean(editingId);
                 const title = document.getElementById('newSgTitleInput').value.trim();
+                const parentIdRaw = document.getElementById('newSgParentSelect').value;
+                const parentId = parentIdRaw && parentIdRaw !== editingId ? parentIdRaw : null;
                 const description = document.getElementById('newSgDescInput').value.trim();
                 const coverSvgType = document.getElementById('newSgCoverStyleSelect').value;
                 const coverFileInput = document.getElementById('newSgCoverFileInput');
@@ -2512,6 +2650,7 @@
                             if (sg.id !== editingId) return sg;
                             return {
                                 ...sg,
+                                parentId,
                                 title,
                                 description,
                                 coverSvgType,
@@ -2521,7 +2660,7 @@
                     } else {
                         updatedSg = [
                             ...subGalleries,
-                            { id, title, description, coverSvgType, customCoverUrl: resolvedCoverUrl }
+                            { id, parentId, title, description, coverSvgType, customCoverUrl: resolvedCoverUrl }
                         ];
                     }
 
@@ -2535,9 +2674,14 @@
                     subGalleries = updatedSg;
                     populateDynamicSelects();
                     renderSubGalleries();
+                    if (currentSubGalleryId) {
+                        renderNestedSubGalleries(currentSubGalleryId);
+                    }
                     renderAdminSubGalleriesList();
 
                     if (currentSubGalleryId === id) {
+                        const parentSg = parentId ? subGalleries.find(p => p.id === parentId) : null;
+                        document.getElementById('activeSubGalleryTag').textContent = parentSg ? `${parentSg.title} • Sub-Gallery` : 'Gallery Collection';
                         document.getElementById('breadcrumbCurrentTitle').textContent = title;
                         document.getElementById('activeSubGalleryTitle').textContent = title;
                         document.getElementById('activeSubGalleryDesc').textContent = description;
