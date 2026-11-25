@@ -1293,13 +1293,19 @@
 
             <form id="uploadArtworkForm">
                 <div class="form-group">
-                    <label class="form-label" for="artFileInput">Select Image File (PNG, JPG, WEBP)</label>
-                    <input type="file" id="artFileInput" accept="image/*" class="form-control" required>
+                    <label class="form-label" for="artFileInput">Select Image File(s) — Single or Bulk Upload (PNG, JPG, WEBP)</label>
+                    <input type="file" id="artFileInput" accept="image/*" class="form-control" multiple required>
+                    <p id="bulkSelectionSummary" class="hidden" style="font-size: 0.78rem; color: var(--accent-bright); margin-top: 6px;"></p>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" id="singleTitleGroup">
                     <label class="form-label" for="artTitleInput">Illustration Title</label>
                     <input type="text" id="artTitleInput" class="form-control" placeholder="e.g., Astral Observatory" required>
+                </div>
+
+                <div class="form-group hidden" id="bulkTitlesPreviewGroup">
+                    <label class="form-label">Bulk Titles (Auto-generated from filenames — editable)</label>
+                    <div id="bulkTitlesList" style="max-height: 180px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding: 10px; border-radius: var(--radius-md); background: var(--bg-primary); border: 1px solid var(--border-subtle);"></div>
                 </div>
 
                 <div class="form-group">
@@ -2769,8 +2775,17 @@
 
             // Upload / Publish Artwork Modal Controls
             const uploadModal = document.getElementById('uploadModal');
+            const resetUploadFormUI = () => {
+                document.getElementById('uploadArtworkForm').reset();
+                document.getElementById('bulkSelectionSummary').classList.add('hidden');
+                document.getElementById('bulkTitlesPreviewGroup').classList.add('hidden');
+                document.getElementById('bulkTitlesList').innerHTML = '';
+                document.getElementById('singleTitleGroup').classList.remove('hidden');
+                document.getElementById('artTitleInput').required = true;
+            };
             const openUploadModal = () => {
                 document.getElementById('adminModal').classList.add('hidden');
+                resetUploadFormUI();
                 populateDynamicSelects();
                 uploadModal.classList.remove('hidden');
                 document.body.style.overflow = 'hidden';
@@ -2779,6 +2794,43 @@
                 uploadModal.classList.add('hidden');
                 document.body.style.overflow = '';
             };
+
+            const formatFilenameToTitle = (filename) => {
+                const base = filename.replace(/\.[^/.]+$/, '').replace(/[-_]+/g, ' ').trim();
+                return base ? base.replace(/\b\w/g, c => c.toUpperCase()) : 'Untitled Study';
+            };
+
+            document.getElementById('artFileInput').addEventListener('change', (e) => {
+                const files = Array.from(e.target.files || []);
+                const summaryEl = document.getElementById('bulkSelectionSummary');
+                const singleGroup = document.getElementById('singleTitleGroup');
+                const singleInput = document.getElementById('artTitleInput');
+                const bulkGroup = document.getElementById('bulkTitlesPreviewGroup');
+                const bulkList = document.getElementById('bulkTitlesList');
+
+                if (files.length <= 1) {
+                    summaryEl.classList.add('hidden');
+                    bulkGroup.classList.add('hidden');
+                    bulkList.innerHTML = '';
+                    singleGroup.classList.remove('hidden');
+                    singleInput.required = true;
+                    if (files.length === 1 && !singleInput.value.trim()) {
+                        singleInput.value = formatFilenameToTitle(files[0].name);
+                    }
+                } else {
+                    summaryEl.textContent = `${files.length} artworks selected for bulk upload.`;
+                    summaryEl.classList.remove('hidden');
+                    singleGroup.classList.add('hidden');
+                    singleInput.required = false;
+                    bulkGroup.classList.remove('hidden');
+                    bulkList.innerHTML = files.map((file, idx) => `
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span style="font-size: 0.75rem; color: var(--text-muted); min-width: 24px;">#${idx + 1}</span>
+                            <input type="text" class="form-control bulk-title-input" data-file-index="${idx}" value="${formatFilenameToTitle(file.name).replace(/"/g, '&quot;')}" style="padding: 7px 10px; font-size: 0.85rem;" required>
+                        </div>
+                    `).join('');
+                }
+            });
 
             document.getElementById('openUploadModalBtn').addEventListener('click', openUploadModal);
             document.getElementById('adminOpenPublishBtn').addEventListener('click', openUploadModal);
@@ -2789,31 +2841,49 @@
                 if (e.target === uploadModal) closeUploadModal();
             });
 
-            // Publish Artwork Submission
-            document.getElementById('uploadArtworkForm').addEventListener('submit', (e) => {
+            const readFileAsDataURL = (file) => new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = (ev) => resolve(ev.target.result);
+                reader.onerror = () => reject(new Error(`Failed to read ${file.name}`));
+                reader.readAsDataURL(file);
+            });
+
+            // Publish Artwork Submission (Supports Single & Bulk Upload)
+            document.getElementById('uploadArtworkForm').addEventListener('submit', async (e) => {
                 e.preventDefault();
                 const fileInput = document.getElementById('artFileInput');
-                const file = fileInput.files && fileInput.files[0];
-                if (!file) return;
+                const files = Array.from(fileInput.files || []);
+                if (files.length === 0) return;
 
-                const title = document.getElementById('artTitleInput').value.trim() || 'Untitled Study';
+                const isBulk = files.length > 1;
+                const bulkTitleInputs = Array.from(document.querySelectorAll('.bulk-title-input'));
                 const subGallery = document.getElementById('artSubGallerySelect').value;
                 const category = document.getElementById('artCategorySelect').value;
                 const tools = document.getElementById('artToolsInput').value.trim() || 'Digital Illustration';
                 const notes = document.getElementById('artNotesInput').value.trim() || 'Digital illustration added to Gumtha Studios.';
                 const submitUploadBtn = document.getElementById('submitUploadBtn');
 
-                const reader = new FileReader();
-                reader.onload = async function(ev) {
-                    const dataUrl = ev.target.result;
-                    const newId = Date.now();
-                    let finalImageUrl = dataUrl;
+                submitUploadBtn.disabled = true;
 
-                    if (adminState.isConnected) {
-                        submitUploadBtn.disabled = true;
-                        submitUploadBtn.textContent = 'Publishing to GitHub...';
+                try {
+                    const newlyCreatedItems = [];
+                    const baseTimestamp = Date.now();
 
-                        try {
+                    for (let i = 0; i < files.length; i++) {
+                        const file = files[i];
+                        const title = isBulk
+                            ? ((bulkTitleInputs[i] && bulkTitleInputs[i].value.trim()) || formatFilenameToTitle(file.name))
+                            : (document.getElementById('artTitleInput').value.trim() || formatFilenameToTitle(file.name));
+
+                        const newId = baseTimestamp + i;
+                        const dataUrl = await readFileAsDataURL(file);
+                        let finalImageUrl = dataUrl;
+
+                        if (adminState.isConnected) {
+                            submitUploadBtn.textContent = isBulk
+                                ? `Uploading ${i + 1} of ${files.length}...`
+                                : 'Publishing to GitHub...';
+
                             const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || 'artwork';
                             const ext = (file.name.split('.').pop() || 'png').toLowerCase();
                             const repoFilePath = `images/${newId}-${slug}.${ext}`;
@@ -2826,37 +2896,9 @@
                             });
 
                             finalImageUrl = `./${repoFilePath}`;
-
-                            const updatedArtworks = [
-                                {
-                                    id: newId,
-                                    subGallery,
-                                    title,
-                                    category,
-                                    tools,
-                                    notes,
-                                    customImageUrl: finalImageUrl,
-                                    svgType: null
-                                },
-                                ...artworks
-                            ];
-
-                            await syncArtworksJsonToGithub(updatedArtworks, `Publish artwork: ${title}`);
-                            artworks = updatedArtworks;
-
-                            closeUploadModal();
-                            document.getElementById('uploadArtworkForm').reset();
-                            showToast(`Published "${title}" permanently to GitHub!`);
-                            navigateToSubGallery(subGallery);
-                            renderAdminArtworksList();
-                        } catch (err) {
-                            showToast(`GitHub publish failed: ${err.message}`);
-                        } finally {
-                            submitUploadBtn.disabled = false;
-                            submitUploadBtn.textContent = 'Publish to GitHub';
                         }
-                    } else {
-                        artworks.unshift({
+
+                        newlyCreatedItems.unshift({
                             id: newId,
                             subGallery,
                             title,
@@ -2866,14 +2908,40 @@
                             customImageUrl: finalImageUrl,
                             svgType: null
                         });
+                    }
+
+                    const updatedArtworks = [...newlyCreatedItems, ...artworks];
+
+                    if (adminState.isConnected) {
+                        submitUploadBtn.textContent = 'Syncing Gallery Catalog...';
+                        const commitMsg = isBulk
+                            ? `Bulk publish ${files.length} artworks`
+                            : `Publish artwork: ${newlyCreatedItems[0].title}`;
+                        await syncArtworksJsonToGithub(updatedArtworks, commitMsg);
+                        artworks = updatedArtworks;
 
                         closeUploadModal();
-                        document.getElementById('uploadArtworkForm').reset();
-                        showToast(`Added "${title}" (local preview)!`);
+                        resetUploadFormUI();
+                        showToast(isBulk
+                            ? `Published ${files.length} artworks permanently to GitHub!`
+                            : `Published "${newlyCreatedItems[0].title}" permanently to GitHub!`);
+                        navigateToSubGallery(subGallery);
+                        renderAdminArtworksList();
+                    } else {
+                        artworks = updatedArtworks;
+                        closeUploadModal();
+                        resetUploadFormUI();
+                        showToast(isBulk
+                            ? `Added ${files.length} artworks (local preview)!`
+                            : `Added "${newlyCreatedItems[0].title}" (local preview)!`);
                         navigateToSubGallery(subGallery);
                     }
-                };
-                reader.readAsDataURL(file);
+                } catch (err) {
+                    showToast(`Upload failed: ${err.message}`);
+                } finally {
+                    submitUploadBtn.disabled = false;
+                    submitUploadBtn.textContent = adminState.isConnected ? 'Publish to GitHub' : 'Add to Gallery';
+                }
             });
 
             // Copy Email Button
