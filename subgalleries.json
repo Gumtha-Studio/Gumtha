@@ -1,12 +1,5 @@
 [
   {
-    "id": "vector-editorial",
-    "title": "Vector & Editorial Studies",
-    "description": "Crisp geometric compositions, botanical clockwork motifs, and stylized cover art studies.",
-    "coverSvgType": "editorial",
-    "customCoverUrl": null
-  },
-  {
     "id": "avengers",
     "parentId": null,
     "title": "Avengers",
