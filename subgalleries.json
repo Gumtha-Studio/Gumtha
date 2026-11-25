@@ -20,5 +20,13 @@
     "description": "Crisp geometric compositions, botanical clockwork motifs, and stylized cover art studies.",
     "coverSvgType": "editorial",
     "customCoverUrl": null
+  },
+  {
+    "id": "avengers",
+    "parentId": "characters-lore",
+    "title": "Avengers",
+    "description": "Team Avengers",
+    "coverSvgType": "sanctuary",
+    "customCoverUrl": "./images/cover-avengers-1795590846509.png"
   }
 ]
