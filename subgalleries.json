@@ -1,10 +1,11 @@
 [
   {
     "id": "characters-lore",
-    "title": "Characters",
-    "description": "Expressive character portraits, traveler archetypes, and narrative costume studies set across misty kingdoms.",
+    "title": "MARVEL",
+    "description": "MARVEL Characters and Teams",
     "coverSvgType": "character",
-    "customCoverUrl": null
+    "customCoverUrl": "./images/cover-characters-lore-1795589551193.jpg",
+    "parentId": null
   },
   {
     "id": "nocturnal-environments",
