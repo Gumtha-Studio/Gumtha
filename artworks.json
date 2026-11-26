@@ -1,5 +1,45 @@
 [
   {
+    "id": 1795682298350,
+    "subGallery": "fantastic-four",
+    "title": "The Thing (Monalisa)",
+    "category": "Fantastic Four",
+    "tools": "Procreate • Digital Art",
+    "notes": "Digital illustration added to Gumtha Studios.",
+    "customImageUrl": "./images/1795682298350-the-thing-monalisa.jpg",
+    "svgType": null
+  },
+  {
+    "id": 1795682298349,
+    "subGallery": "fantastic-four",
+    "title": "Mister Fantastic (Samantha)",
+    "category": "Fantastic Four",
+    "tools": "Procreate • Digital Art",
+    "notes": "Digital illustration added to Gumtha Studios.",
+    "customImageUrl": "./images/1795682298349-mister-fantastic-samantha.jpg",
+    "svgType": null
+  },
+  {
+    "id": 1795682298348,
+    "subGallery": "fantastic-four",
+    "title": "Invisible Woman (Kriti Shetty)",
+    "category": "Fantastic Four",
+    "tools": "Procreate • Digital Art",
+    "notes": "Digital illustration added to Gumtha Studios.",
+    "customImageUrl": "./images/1795682298348-invisible-woman-kriti-shetty.jpg",
+    "svgType": null
+  },
+  {
+    "id": 1795682298347,
+    "subGallery": "fantastic-four",
+    "title": "Human Tourch (Sonal Chauhan)",
+    "category": "Fantastic Four",
+    "tools": "Procreate • Digital Art",
+    "notes": "Digital illustration added to Gumtha Studios.",
+    "customImageUrl": "./images/1795682298347-human-tourch-sonal-chauhan.jpg",
+    "svgType": null
+  },
+  {
     "id": 1795681304071,
     "subGallery": "x-man",
     "title": "Wolverine (Mrunal Thakur)",
