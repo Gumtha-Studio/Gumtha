@@ -1,7 +1,7 @@
 [
   {
     "id": "avengers",
-    "parentId": null,
+    "parentId": "marvel",
     "title": "Avengers",
     "description": "Team Avengers",
     "coverSvgType": "sanctuary",
