@@ -6,5 +6,13 @@
     "description": "Team Avengers",
     "coverSvgType": "sanctuary",
     "customCoverUrl": "./images/cover-avengers-1795590846509.png"
+  },
+  {
+    "id": "marvel",
+    "parentId": null,
+    "title": "MARVEL",
+    "description": "MARVEL Teams and Characters",
+    "coverSvgType": "sanctuary",
+    "customCoverUrl": "./images/cover-marvel-1795680393535.jpg"
   }
 ]
