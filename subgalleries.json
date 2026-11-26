@@ -14,5 +14,13 @@
     "description": "MARVEL Teams and Characters",
     "coverSvgType": "sanctuary",
     "customCoverUrl": "./images/cover-marvel-1795680393535.jpg"
+  },
+  {
+    "id": "x-man",
+    "parentId": "marvel",
+    "title": "X-Man",
+    "description": "Team X-Man",
+    "coverSvgType": "sanctuary",
+    "customCoverUrl": "./images/cover-x-man-1795680912693.jpg"
   }
 ]
