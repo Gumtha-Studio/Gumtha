@@ -30,5 +30,13 @@
     "description": "Team Fantastic Four",
     "coverSvgType": "sanctuary",
     "customCoverUrl": "./images/cover-fantastic-four-1795682008391.jpg"
+  },
+  {
+    "id": "dr-doom",
+    "parentId": "marvel",
+    "title": "Dr Doom",
+    "description": "Team Doom",
+    "coverSvgType": "sanctuary",
+    "customCoverUrl": "./images/cover-dr-doom-1795687934097.jpg"
   }
 ]
