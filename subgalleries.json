@@ -34,8 +34,8 @@
   {
     "id": "dr-doom",
     "parentId": "marvel",
-    "title": "Dr Doom",
-    "description": "Team Doom",
+    "title": "Doom Army",
+    "description": "Army of Dr Doom",
     "coverSvgType": "sanctuary",
     "customCoverUrl": "./images/cover-dr-doom-1795687934097.jpg"
   }
