@@ -22,5 +22,13 @@
     "description": "Team X-Man",
     "coverSvgType": "sanctuary",
     "customCoverUrl": "./images/cover-x-man-1795680912693.jpg"
+  },
+  {
+    "id": "fantastic-four",
+    "parentId": "marvel",
+    "title": "Fantastic Four",
+    "description": "Team Fantastic Four",
+    "coverSvgType": "sanctuary",
+    "customCoverUrl": "./images/cover-fantastic-four-1795682008391.jpg"
   }
 ]
